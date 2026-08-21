@@ -115,7 +115,7 @@ dns-reject-mode = LoopbackIP
 # 远程订阅服务
 # =====================================
 [Remote Proxy]
-#SubProxy = https://sub.store/download/sub,parser-enabled=false,udp=false,fast-open=false,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true,img-url=flame.fill
+#SubProxy = https://sub.store/download/sub,parser-enabled = false,udp=false,fast-open=false,vmess-aead=true,skip-cert-verify=default,enabled = true,flexible-sni=true,img-url = flame.fill
 
 
 # =====================================
@@ -134,75 +134,75 @@ dns-reject-mode = LoopbackIP
 
 # > 服务策略
 # AI服务
-AI服务 = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
+AI服务 = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
 
 # 应用
-谷歌服务 = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png
-苹果服务 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png
-微软服务 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png
+谷歌服务 = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png
+苹果服务 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png
+微软服务 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png
 
 # 社交
-Telegram = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
-Twitter = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png
-Facebook = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Facebook.png
-TikTok = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png
+Telegram = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
+Twitter = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png
+Facebook = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Facebook.png
+TikTok = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png
 
 # 影音流媒体
-哔哩哔哩 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
-YouTube = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png
-其它流媒体 = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
+哔哩哔哩 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
+YouTube = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png
+其它流媒体 = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
 
 # 电商
-PayPal = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Paypal.png
+PayPal = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Paypal.png
 
 # CryptoCurrency
-CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 台湾节点, 新加坡节点, 日本节点, 韩国节点, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cryptocurrency.png
+CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 台湾节点, 新加坡节点, 日本节点, 韩国节点, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cryptocurrency.png
 
 # > 游戏
-游戏平台 = select, DIRECT, PROXY, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
+游戏平台 = select, DIRECT, PROXY, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
 
 # > 其它策略
 # 根据应用情况，需要可调控的线路（如：DouYin、ZFB、TX的一些操作，可能需指定特定线路）
-调控线路 = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
+调控线路 = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 
 # 兜底策略
-兜底线路 = select, DIRECT, PROXY, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
+兜底线路 = select, DIRECT, PROXY, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
 
 # > 自定义指定代理
-静态住宅或ISP = select,RES_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
-个人VPS_01 = select,VPS01_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
-个人VPS_02 = select,VPS02_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
-订阅优选1 = select,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
-订阅优选2 = select,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
+静态住宅或ISP = select,RES_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
+个人VPS_01 = select,VPS01_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
+个人VPS_02 = select,VPS02_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
+订阅优选1 = select, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
+订阅优选2 = select, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 
 # > 定时测速策略组
 # 根据提供的url，每隔一段时间对该策略组下的所有节点进行测速，选择最快的一个节点使用
 #  - url: 测速的url，loon会向该url发起header请求。若未配置，则使用 [General] 中的 proxy-test-url 项进行测速
 #  - interval: 测速间隔时间，单位秒
 #  - tolerance: 容差，如果当前测速后的最优节点和之前最优节点的测速相差小于tolerance，将不会进行节点切换，单位毫秒
-香港节点 = url-test,HK_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-台湾节点 = url-test,TW_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-新加坡节点 = url-test,SG_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
-日本节点 = url-test,JP_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-韩国节点 = url-test,KR_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-美国节点 = url-test,US_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-加拿大节点 = url-test,CA_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
+香港节点 = url-test, HK_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+台湾节点 = url-test, TW_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+新加坡节点 = url-test, SG_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+日本节点 = url-test, JP_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+韩国节点 = url-test, KR_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+美国节点 = url-test, US_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+加拿大节点 = url-test, CA_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
 
 
 # =====================================
 # 通过正则表达式，对远程订阅节点进行筛选
 # =====================================
 [Remote Filter]
-RES_Filter = NameRegex, FilterKey="🏠|静态|住宅|ISP"
-VPS01_Filter = NameRegex, FilterKey="Pri_V_01|P_VPS_01"
-VPS02_Filter = NameRegex, FilterKey="Pri_V_02|P_VPS_02"
-HK_Filter = NameRegex, FilterKey="(?=.*(🇭🇰|港|HK|(?i)Hong))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-TW_Filter = NameRegex, FilterKey="(?=.*(🇹🇼|TW|TWN|Taiwan|Taipei|taiwan|台湾|台灣|台北|台中|新北|彰化))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-SG_Filter = NameRegex, FilterKey="(?=.*(🇸🇬|SG|Sing|sing|新加坡|狮城|沪新|京新|深新|杭新|广新))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-JP_Filter = NameRegex, FilterKey="(?=.*(🇯🇵|JP|Japan|japan|Tokyo|tokyo|日本|东京|大阪|京日|苏日|沪日|上日|川日|深日|广日|日))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-KR_Filter = NameRegex, FilterKey="(?=.*(🇰🇷|KR|Korea|korea|KOR|韩国|首尔|韩|韓|春川))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-US_Filter = NameRegex, FilterKey="(?=.*(🇺🇸|US|America|america|United States|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美|美))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-CA_Filter = NameRegex, FilterKey="(?=.*(🇨🇦|CA|Canada|加拿大))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+RES_Filter = NameRegex, FilterKey = "🏠|静态|住宅|ISP"
+VPS01_Filter = NameRegex, FilterKey = "Pri_V_01|P_VPS_01"
+VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
+HK_Filter = NameRegex, FilterKey = "(?=.*(🇭🇰|港|HK|(?i)Hong))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+TW_Filter = NameRegex, FilterKey = "(?=.*(🇹🇼|TW|TWN|Taiwan|Taipei|taiwan|台湾|台灣|台北|台中|新北|彰化))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+SG_Filter = NameRegex, FilterKey = "(?=.*(🇸🇬|SG|Sing|sing|新加坡|狮城|沪新|京新|深新|杭新|广新))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+JP_Filter = NameRegex, FilterKey = "(?=.*(🇯🇵|JP|Japan|japan|Tokyo|tokyo|日本|东京|大阪|京日|苏日|沪日|上日|川日|深日|广日|日))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+KR_Filter = NameRegex, FilterKey = "(?=.*(🇰🇷|KR|Korea|korea|KOR|韩国|首尔|韩|韓|春川))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+US_Filter = NameRegex, FilterKey = "(?=.*(🇺🇸|US|America|america|United States|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美|美))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+CA_Filter = NameRegex, FilterKey = "(?=.*(🇨🇦|CA|Canada|加拿大))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 
 
 # =====================================
@@ -211,90 +211,90 @@ CA_Filter = NameRegex, FilterKey="(?=.*(🇨🇦|CA|Canada|加拿大))^((?!(静�
 # =====================================
 [Remote Rule]
 # 直连域名列表
-#https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/direct.txt, policy=DIRECT, tag=直连域名列表, enabled=true
+#https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/direct.txt, policy = DIRECT, tag = 直连域名列表, enabled = true
 # 中国 IP 地址
-#https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/cncidr.txt, policy=DIRECT, tag=中国IP地址, enabled=true
+#https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/cncidr.txt, policy = DIRECT, tag = 中国IP地址, enabled = true
 # 私有网络专用域名
-#https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/private.txt, policy=DIRECT, tag=私有网络专用域名, enabled=true
+#https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/private.txt, policy = DIRECT, tag = 私有网络专用域名, enabled = true
 
 # 本地/局域网
-#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/LocalAreaNetwork.list, policy=DIRECT, tag=本地局域网, enabled=true
+#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/LocalAreaNetwork.list, policy = DIRECT, tag = 本地局域网, enabled = true
 # 中国云服务商
-#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaCompanyIp.list, policy=DIRECT, tag=中国云服务商, enabled=true
+#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaCompanyIp.list, policy = DIRECT, tag = 中国云服务商, enabled = true
 
 # 本地/局域网
-#https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Lan/Lan.list, policy=DIRECT, tag=本地局域网, enabled=true
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Lan/Lan.list, policy=DIRECT, tag=本地局域网, enabled=true
+#https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Lan/Lan.list, policy = DIRECT, tag = 本地局域网, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Lan/Lan.list, policy = DIRECT, tag = 本地局域网, enabled = true
 
 # 广告规则
-#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list, policy=广告拦截, tag=广告拦截, enabled=true
-#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list, policy=广告拦截, tag=广告拦截, enabled=true
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Advertising/Advertising.list, policy=广告拦截, tag=广告拦截, enabled=true
+#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list, policy = 广告拦截, tag = 广告拦截, enabled = true
+#https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list, policy = 广告拦截, tag = 广告拦截, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Advertising/Advertising.list, policy = 广告拦截, tag = 广告拦截, enabled = true
 
 # AI服务
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Copilot/Copilot.list, policy=AI服务, tag=AI服务, enabled=true
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Gemini/Gemini.list, policy=AI服务, tag=AI服务, enabled=true
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/OpenAI/OpenAI.list, policy=AI服务, tag=AI服务, enabled=true
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Claude/Claude.list, policy=AI服务, tag=AI服务, enabled=true
-https://github.com/fmz200/wool_scripts/raw/main/Loon/rule/AI.list, policy=AI服务, tag=AI服务, enabled=true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Copilot/Copilot.list, policy = AI服务, tag = AI服务, enabled = true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Gemini/Gemini.list, policy = AI服务, tag = AI服务, enabled = true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/OpenAI/OpenAI.list, policy = AI服务, tag = AI服务, enabled = true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Claude/Claude.list, policy = AI服务, tag = AI服务, enabled = true
+https://github.com/fmz200/wool_scripts/raw/main/Loon/rule/AI.list, policy = AI服务, tag = AI服务, enabled = true
 
 # Telegram
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Telegram/Telegram.list, policy=Telegram, tag=Telegram, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Telegram/Telegram.list, policy = Telegram, tag = Telegram, enabled = true
 # X
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Twitter/Twitter.list, policy=Twitter, tag=Twitter, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Twitter/Twitter.list, policy = Twitter, tag = Twitter, enabled = true
 # Meta
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Facebook/Facebook.list, policy=Facebook, tag=Facebook, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Facebook/Facebook.list, policy = Facebook, tag = Facebook, enabled = true
 # TikTok
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/TikTok/TikTok.list, policy=TikTok, tag=TikTok, enabled=true
-https://cdn.jsdelivr.net/gh/Semporia/TikTok-Unlock@master/Loon/TikTok.list, policy=TikTok, tag=TikTok, enabled=true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/TikTok/TikTok.list, policy = TikTok, tag = TikTok, enabled = true
+https://cdn.jsdelivr.net/gh/Semporia/TikTok-Unlock@master/Loon/TikTok.list, policy = TikTok, tag = TikTok, enabled = true
 
 # Google
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Google/Google.list, policy=谷歌服务, tag=谷歌服务, enabled=true
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/GoogleFCM/GoogleFCM.list, policy=谷歌服务, tag=谷歌FCM服务, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Google/Google.list, policy = 谷歌服务, tag = 谷歌服务, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/GoogleFCM/GoogleFCM.list, policy = 谷歌服务, tag = 谷歌FCM服务, enabled = true
 
 # YouTube
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/YouTube/YouTube.list, policy=YouTube, tag=YouTube, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/YouTube/YouTube.list, policy = YouTube, tag = YouTube, enabled = true
 
 # CryptoCurrency
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Cryptocurrency/Cryptocurrency.list, policy=CryptoCurrency, tag=数字加密, enabled=true
-https://cdn.jsdelivr.net/gh/iab0x00/ProxyRules@main/Rule/Crypto.txt, policy=CryptoCurrency, tag=数字加密, enabled=true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Cryptocurrency/Cryptocurrency.list, policy = CryptoCurrency, tag = 数字加密, enabled = true
+https://cdn.jsdelivr.net/gh/iab0x00/ProxyRules@main/Rule/Crypto.txt, policy = CryptoCurrency, tag = 数字加密, enabled = true
 
 # Apple
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Apple/Apple.list, policy=苹果服务, tag=苹果服务, enabled=true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Apple/Apple.list, policy = 苹果服务, tag = 苹果服务, enabled = true
 # Microsoft
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Microsoft/Microsoft.list, policy=微软服务, tag=微软服务, enabled=true
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Microsoft/Microsoft.list, policy = 微软服务, tag = 微软服务, enabled = true
 # Github
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/GitHub/GitHub.list, policy=兜底线路, tag=Github, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/GitHub/GitHub.list, policy = 兜底线路, tag = Github, enabled = true
 
 # PayPal
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/PayPal/PayPal.list, policy=PayPal, tag=PayPal, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/PayPal/PayPal.list, policy = PayPal, tag = PayPal, enabled = true
 
 # Talkatone
-https://cdn.jsdelivr.net/gh/iab0x00/ProxyRules@main/Rule/Talkatone.txt, policy=兜底线路, tag=Talkatone, enabled=false
+https://cdn.jsdelivr.net/gh/iab0x00/ProxyRules@main/Rule/Talkatone.txt, policy = 兜底线路, tag = Talkatone, enabled = false
 
 # 其它流媒体
-https://raw.githubusercontent.com/ddgksf2013/Filter/master/Streaming.list, policy=其它流媒体, tag=国际媒体, enabled=false
-https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Porn.list, policy=其它流媒体, tag=国际媒体P, enabled=true
+https://raw.githubusercontent.com/ddgksf2013/Filter/master/Streaming.list, policy = 其它流媒体, tag = 国际媒体, enabled = false
+https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Porn.list, policy = 其它流媒体, tag = 国际媒体P, enabled = true
 
 # 游戏
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Game/Game.list, policy=游戏平台, tag=游戏平台, enabled=false
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Game/Game.list, policy = 游戏平台, tag = 游戏平台, enabled = false
 
 # 抖音
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/DouYin/DouYin.list, policy=调控线路, tag=抖音, enabled=false
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/DouYin/DouYin.list, policy = 调控线路, tag = 抖音, enabled = false
 # 微信
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/WeChat/WeChat.list, policy=调控线路, tag=微信, enabled=false
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/WeChat/WeChat.list, policy = 调控线路, tag = 微信, enabled = false
 # 腾讯
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Tencent/Tencent.list, policy=调控线路, tag=腾讯, enabled=false
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Tencent/Tencent.list, policy = 调控线路, tag = 腾讯, enabled = false
 # 百度
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Baidu/Baidu.list, policy=调控线路, tag=百度, enabled=false
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Baidu/Baidu.list, policy = 调控线路, tag = 百度, enabled = false
 # 小红书
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/XiaoHongShu/XiaoHongShu.list, policy=调控线路, tag=小红书, enabled=false
+#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/XiaoHongShu/XiaoHongShu.list, policy = 调控线路, tag = 小红书, enabled = false
 # Bilibili
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/BiliBili/BiliBili.list, policy=调控线路, tag=哔哩哔哩, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/BiliBili/BiliBili.list, policy = 调控线路, tag = 哔哩哔哩, enabled = true
 
 # 兜底
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/China/China.list, policy=DIRECT, tag=国内直连, enabled=true
-https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global/Global.list, policy=兜底线路, tag=国际代理, enabled=true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/China/China.list, policy = DIRECT, tag = 国内直连, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global/Global.list, policy = 兜底线路, tag = 国际代理, enabled = true
 
 
 # =====================================
@@ -313,16 +313,16 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global
 # IP-CIDR, 182.254.116.0/24, DIRECT
 
 # 自定义分流规则
-DOMAIN-KEYWORD,apple,苹果服务
-DOMAIN-KEYWORD,google,谷歌服务
-DOMAIN-KEYWORD,youtube,YouTube
+DOMAIN-KEYWORD, apple, 苹果服务
+DOMAIN-KEYWORD, google, 谷歌服务
+DOMAIN-KEYWORD, youtube, YouTube
 
 # 根据 GEOIP 数据库判断IP是否属于CN地区，若匹配到，将走直连
-GEOIP,CN,DIRECT
+GEOIP, CN, DIRECT
 
 # 当以上所有 本地/远程 规则都未匹配到时，将使用 FINAL 规则的策略
-#FINAL,PROXY
-FINAL,兜底线路
+#FINAL, PROXY
+FINAL, 兜底线路
 
 
 # =====================================
@@ -354,30 +354,29 @@ FINAL,兜底线路
 # =====================================
 [Plugin]
 # ------ 会员解锁 ------ #
-https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag=ELSASpeak解锁, enabled=false
-https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag=剪映会员解锁, enabled=false
-https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag=多邻国解锁, enabled=false
-https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag=Spotify会员解锁, enabled=false
-https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.lpx, tag=PTB&91P会员解锁, enabled=false
+https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag = ELSASpeak解锁, enabled = false
+https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag = 剪映会员解锁, enabled = false
+https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag = 多邻国解锁, enabled = false
+https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag = Spotify会员解锁, enabled = false
+https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.lpx, tag = PTB&91P会员解锁, enabled = false
 
 # ------ 广告净化 ------ #
-https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag=YouTube去广告, enabled=true
-https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/Bilibili_remove_ads.plugin, tag=哔哩去广告, enabled=false
-https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/NeteaseCloudMusic_remove_ads.plugin, tag=网易云音乐应用净化, enabled=false
-https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/XWebAds.plugin, tag=X网页去广告, enabled=false
-https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/91Porn_ads.plugin, tag=91P网页去广告, enabled=true
-https://raw.githubusercontent.com/Yu9191/Rewrite/main/ydm.plugin, tag=YDM网页去广告, enabled=false
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag = YouTube去广告, enabled = true
+https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/Bilibili_remove_ads.plugin, tag = 哔哩去广告, enabled = false
+https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/NeteaseCloudMusic_remove_ads.plugin, tag = 网易云音乐应用净化, enabled = false
+https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/XWebAds.plugin, tag = X网页去广告, enabled = false
+https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/91Porn_ads.plugin, tag = 91P网页去广告, enabled = true
+https://raw.githubusercontent.com/Yu9191/Rewrite/main/ydm.plugin, tag = YDM网页去广告, enabled = false
 
 # ------ 功能增强 ------ #
-https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag=AppleWLOC, enabled=ture
-https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag=京东比价, enabled=false
+https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = ture
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag = 京东比价, enabled = false
 
 
 # =====================================
 # 证书、主机名等配置
 # =====================================
 [MITM]
-enable = false
 skip-server-cert-verify = false
 hostname =
 ca-p12 = 

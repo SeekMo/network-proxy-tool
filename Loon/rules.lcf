@@ -166,7 +166,7 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 调控线路 = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 
 # 兜底策略
-兜底线路 = select, DIRECT, PROXY, 订阅优选, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
+兜底线路 = select, DIRECT, PROXY, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
 
 # > 自定义指定代理节点
 静态住宅或ISP = select,RES_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
@@ -178,6 +178,8 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 #  - url: 测速的url，loon会向该url发起header请求。若未配置，则使用 [General] 中的 proxy-test-url 项进行测速
 #  - interval: 测速间隔时间，单位秒
 #  - tolerance: 容差，如果当前测速后的最优节点和之前最优节点的测速相差小于tolerance，将不会进行节点切换，单位毫秒
+订阅优选1 = url-test,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
+订阅优选2 = url-test,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 #静态住宅或ISP = url-test,RES_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
 #个人VPS_01 = url-test,VPS01_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
 #个人VPS_02 = url-test,VPS02_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
@@ -188,7 +190,6 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 韩国节点 = url-test,KR_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
 美国节点 = url-test,US_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 加拿大节点 = url-test,CA_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
-订阅优选 = url-test,SUB_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
 
 
 # =====================================
@@ -205,7 +206,6 @@ JP_Filter = NameRegex, FilterKey="(?=.*(🇯🇵|JP|Japan|japan|Tokyo|tokyo|日�
 KR_Filter = NameRegex, FilterKey="(?=.*(🇰🇷|KR|Korea|korea|KOR|韩国|首尔|韩|韓|春川))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 US_Filter = NameRegex, FilterKey="(?=.*(🇺🇸|US|America|america|United States|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美|美))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 CA_Filter = NameRegex, FilterKey="(?=.*(🇨🇦|CA|Canada|加拿大))^((?!(静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
-SUB_Filter = NameRegex, FilterKey="SUB_"
 
 
 # =====================================

@@ -168,28 +168,25 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 # 兜底策略
 兜底线路 = select, DIRECT, PROXY, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
 
-# > 自定义指定代理节点
+# > 自定义指定代理
 静态住宅或ISP = select,RES_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
 个人VPS_01 = select,VPS01_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
 个人VPS_02 = select,VPS02_Filter,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
+订阅优选1 = select,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
+订阅优选2 = select,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 
 # > 定时测速策略组
 # 根据提供的url，每隔一段时间对该策略组下的所有节点进行测速，选择最快的一个节点使用
 #  - url: 测速的url，loon会向该url发起header请求。若未配置，则使用 [General] 中的 proxy-test-url 项进行测速
 #  - interval: 测速间隔时间，单位秒
 #  - tolerance: 容差，如果当前测速后的最优节点和之前最优节点的测速相差小于tolerance，将不会进行节点切换，单位毫秒
-订阅优选1 = url-test,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
-订阅优选2 = url-test,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
-#静态住宅或ISP = url-test,RES_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
-#个人VPS_01 = url-test,VPS01_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
-#个人VPS_02 = url-test,VPS02_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
-香港节点 = url-test,HK_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-台湾节点 = url-test,TW_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-新加坡节点 = url-test,SG_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
-日本节点 = url-test,JP_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-韩国节点 = url-test,KR_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-美国节点 = url-test,US_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-加拿大节点 = url-test,CA_Filter,interval = 3600,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
+香港节点 = url-test,HK_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+台湾节点 = url-test,TW_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+新加坡节点 = url-test,SG_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+日本节点 = url-test,JP_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+韩国节点 = url-test,KR_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+美国节点 = url-test,US_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+加拿大节点 = url-test,CA_Filter,interval = 86400,tolerance = 300,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
 
 
 # =====================================

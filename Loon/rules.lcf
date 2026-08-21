@@ -358,17 +358,19 @@ FINAL,兜底线路
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag=ELSASpeak解锁, enabled=false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag=剪映会员解锁, enabled=false
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag=多邻国解锁, enabled=false
-https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag=Spotif会员解锁, enabled=false
+https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag=Spotify会员解锁, enabled=false
 https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.lpx, tag=PTB&91P会员解锁, enabled=false
 
 # ------ 广告净化 ------ #
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag=YouTube去广告, enabled=true
 https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/Bilibili_remove_ads.plugin, tag=哔哩去广告, enabled=false
 https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/NeteaseCloudMusic_remove_ads.plugin, tag=网易云音乐应用净化, enabled=false
+https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/XWebAds.plugin, tag=X网页去广告, enabled=false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/91Porn_ads.plugin, tag=91P网页去广告, enabled=true
 https://raw.githubusercontent.com/Yu9191/Rewrite/main/ydm.plugin, tag=YDM网页去广告, enabled=false
 
 # ------ 功能增强 ------ #
+https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag=AppleWLOC, enabled=ture
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag=京东比价, enabled=false
 
 

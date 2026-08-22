@@ -6,6 +6,9 @@
 #  - https://github.com/Loon0x00/LoonManual
 #  - https://nsloon.app/docs/intro
 
+# Loon 三方高级教程
+#  - https://nsloon.uk/tutorial/advanced
+
 
 # =====================================
 # 通用配置
@@ -13,8 +16,8 @@
 [General]
 # 让指定 IP 段或域名绕过 Loon 的 TUN，由系统直接处理
 bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,239.255.255.250/32,255.255.255.255/32
-# 让指定 IP 段或域名绕过 HTTP Proxy
-skip-proxy = 127.0.0.1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,localhost
+# 跳过某个域名或者 IP 段，这些目标主机将不会由 Loon Proxy 处理
+skip-proxy = localhost, *.local, captive.apple.com, e.crashlytics.com, www.baidu.com, passenger.t3go.cn, yunbusiness.ccb.com, wxh.wo.cn, gate.lagou.com, www.abchina.com.cn, login-service.mobile-bank.psbc.com, mobile-bank.psbc.com, 10.0.0.0/8, 127.0.0.1/32, 172.16.0.0/12, 192.168.0.0/16, 192.168.122.1/32, 193.168.0.1/32, ::1/128, fe80::/10
 
 # > DNS 服务器，多个 DNS 服务器使用英文逗号分隔
 # 普通 UDP DNS，system 表示系统 DNS
@@ -63,8 +66,8 @@ resource-parser = https://github.com/sub-store-org/Sub-Store/releases/latest/dow
 #  - Balance: 在WiFi和蜂窝数据都开启的情况下，均衡使用网络接口
 interface-mode = auto
 
-# 解决一些ip请求无法匹配规则的问题。real-ip指定的域名将不返回fake ip响应，直接将dns请求发往目标dns服务器
-#real-ip = *.apple.com,*.icloud.com,msftconnecttest.com,msftncsi.com,*.msftconnecttest.com,*.msftncsi.com,*.srv.nintendo.net,*.stun.playstation.net,xbox.*.microsoft.com,*.xboxlive.com,*.battlenet.com.cn,*.battlenet.com,*.blzstatic.cn,*.battle.net
+# DNS 数据包将被转发到上游 DNS 服务器。解决一些ip请求无法匹配规则的问题，real-ip指定的域名将不返回fake ip响应，直接将dns请求发往目标dns服务器
+real-ip = *.lan, *.direct, cable.auth.com, *.msftconnecttest.com, *.msftncsi.com, network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, *.srv.nintendo.net, *.stun.playstation.net, xbox.*.microsoft.com, *.xboxlive.com, stun.*, global.turn.twilio.com, global.stun.twilio.com, app.yinxiang.com, injections.adguard.org, local.adguard.org, cable.auth.com, localhost.*.qq.com, localhost.*.weixin.qq.com, *.logon.battlenet.com.cn, *.logon.battle.net, *.blzstatic.cn, music.163.com, *.music.163.com, *.126.net, musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, *.kuwo.cn, api-jooxtt.sanook.com, api.joox.com, joox.com, y.qq.com, *.y.qq.com, streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, *.xiami.com, *.music.migu.cn, music.migu.cn, proxy.golang.org, *.mcdn.bilivideo.cn, *.cmpassport.com, id6.me, open.e.189.cn, opencloud.wostore.cn, id.mail.wo.cn, mdn.open.wo.cn, hmrz.wo.cn, nishub1.10010.com, enrichgw.10010.com, *.wosms.cn, *.jegotrip.com.cn, *.icitymobile.mobi, *.pingan.com.cn, *.cmbchina.com, *.10099.com.cn, *.microdone.cn, pool.ntp.org, *.pool.ntp.org, ntp.*.com, time.*.com, ntp?.*.com, time?.*.com, time.*.gov, time.*.edu.cn, *.ntp.org.cn, PDC._msDCS.*.*, DC._msDCS.*.*, GC._msDCS.*.*
 
 # 禁止指定端口使用 UDP
 disable-udp-ports = 443,80
@@ -74,14 +77,21 @@ disable-stun = true
 udp-fallback-mode = REJECT
 
 # 自定义 GeoIP 数据库
-#geoip-url = https://geodata.kelee.one/Country-Masaiki.mmdb
+# -- CN -- #
+#geoip-url = https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb
+#geoip-url = https://raw.githubusercontent.com/Hackl0us/GeoIP2-CN/release/Country.mmdb
 #geoip-url = https://raw.githubusercontent.com/Moli-X/Tool/X/GeoIP/CN_Country.mmdb
-#geoip-url = https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
-geoip-url = https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb
+#geoip-url = https:///raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GeoIP/GeoIP2-CN/Country.mmdb
+# -- GLOBAL -- #
+#geoip-url = https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GeoIP/GeoLite2-Country.mmdb
+geoip-url = https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
+
 # 自定义 ASN 数据库
 #ipasn-url = https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb
 #ipasn-url = https://raw.githubusercontent.com/Moli-X/Tool/X/GeoIP/GeoLite2-ASN.mmdb
-ipasn-url = https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-ASN.mmdb
+#ipasn-url = https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-ASN.mmdb
+#ipasn-url = https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GeoIP/GeoLite2-ASN.mmdb
+ipasn-url = https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
 
 # 设置域名拒绝规则的执行阶段
 #  - DNS: 在 DNS 阶段使用 Loopback IP、No Answer 或 NXDomain 拒绝
@@ -355,22 +365,46 @@ FINAL, 兜底线路
 [Plugin]
 # ------ 会员解锁 ------ #
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag = ELSASpeak解锁, enabled = false
-https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag = 剪映会员解锁, enabled = false
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag = 多邻国解锁, enabled = false
+https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag = 剪映会员解锁, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JianYing/JianYing.plugin, tag = 剪映会员解锁, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/KuGouMusic/KuGou.plugin, tag = 酷狗音乐解锁, enabled = false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag = Spotify会员解锁, enabled = false
 https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.lpx, tag = PTB&91P会员解锁, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/HaiJiao/HaiJiao.plugin, tag = 海角社区解锁, enabled = false
 
 # ------ 广告净化 ------ #
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = true
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/ASN-China/Loon-HTTPDNS.Block.plugin, tag = HTTPDNS拦截器, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag = YouTube去广告, enabled = true
-https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/Bilibili_remove_ads.plugin, tag = 哔哩去广告, enabled = false
-https://raw.githubusercontent.com/Moli-X/Tool/raw/X/Loon/Plugin/Kelee/NeteaseCloudMusic_remove_ads.plugin, tag = 网易云音乐应用净化, enabled = false
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Weixin_Official_Accounts_remove_ads.plugin, tag = 微信公众号去广告, enabled = true
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/WexinMiniPrograms_Remove_ads.plugin, tag = 微信小程序去广告, enabled = true
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Weixin_external_links_unlock.plugin, tag = 微信外部链接解锁, enabled = false
+
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Bilibili_remove_ads.plugin, tag = 哔哩去广告, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Bilibili/Bilibili_AD.plugin, tag = 哔哩去广告, enabled = false
+
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/MailMaster_remove_ads.plugin, tag = 网易邮箱大师去广告, enabled = false
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/NeteaseCloudMusic_remove_ads.plugin, tag = 网易云音乐应用净化, enabled = false
+
 https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/XWebAds.plugin, tag = X网页去广告, enabled = false
+
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/91Porn_ads.plugin, tag = 91P网页去广告, enabled = true
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JavDB/JavDB.plugin, tag = JavDB去广告&跳转MissAV, enabled = false
 https://raw.githubusercontent.com/Yu9191/Rewrite/main/ydm.plugin, tag = YDM网页去广告, enabled = false
+
+# ------ 网页优化 ------ #
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GithubAutoRaw/GithubAutoRaw.plugin, tag = GitHub源文件重定向为Raw, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GitRawAutoCDN/GitRawAutoCDN.plugin, tag = GitHub源文件自动CDN, enabled = false
 
 # ------ 功能增强 ------ #
 https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = ture
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality/IPQuality.plugin, tag = 节点检测工具, enabled = ture
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Node_detection_tool.plugin, tag = 节点检测工具, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Block_Check/Block_Check.plugin, tag = 节点连通性检测, enabled = false
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/AppleWeatherEnhancer.plugin, tag = Apple天气增强, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag = 京东比价, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JD_Price/JD_Price.plugin, tag = 京东比价, enabled = false
 
 
 # =====================================
@@ -378,6 +412,7 @@ https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugi
 # =====================================
 [MITM]
 skip-server-cert-verify = false
-hostname =
+# 前缀 - 表示排除特定主机名，即：不可 MitM 也不应该被打断连接的域名
+hostname = *.example.com, *.sample.com, -gateway.icloud.com, -gateway.icloud.com.cn, -weather-data.apple.com, -buy.itunes.apple.com, -pan.baidu.com
 ca-p12 = 
 ca-passphrase = 

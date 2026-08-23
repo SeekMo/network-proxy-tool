@@ -211,7 +211,9 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 RES_Filter = NameRegex, FilterKey = "🏠|静态|住宅|(?i)ISP"
 VPS01_Filter = NameRegex, FilterKey = "Pri_V_01|P_VPS_01"
 VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
-SUB_Free = NameRegex, FilterKey = "🟢|🟡|🟠"
+#SUB_Free = NameRegex, FilterKey = "🟢|🟡|🟠"
+# 1、匹配出  "🟢|🟡|🟠 " ; 2、移除 "_github.com/Ruk1ng001"，保留结尾随机字符
+SUB_Free = NameRegex, FilterKey = "^((?:🟢|🟡|🟠).*?)_github\.com/Ruk1ng001(.*)$"
 HK_Filter = NameRegex, FilterKey = "(?=.*(🇭🇰|HK|(?i)Hong|香港))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 TW_Filter = NameRegex, FilterKey = "(?=.*(🇹🇼|TW|(?i)Taiwan|台湾|台灣))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 SG_Filter = NameRegex, FilterKey = "(?=.*(🇸🇬|SG|(?i)Sing|新加坡|狮城))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"

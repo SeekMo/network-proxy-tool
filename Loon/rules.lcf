@@ -126,7 +126,11 @@ dns-reject-mode = LoopbackIP
 # =====================================
 [Remote Proxy]
 # SubProxy = https://sub.store/download/sub, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-enabled = true, enabled = true
+# 旧版解析器脚本，[General] - resource-parser
 # 公益订阅1 = https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-enabled = true, enabled = true
+# 新版解析器插件，[Plugin]
+公益订阅1 = https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-plugin=新版资源解析器插件, enabled = true
+
 
 # =====================================
 # 代理链
@@ -366,7 +370,7 @@ FINAL, 兜底线路
 # =====================================
 [Plugin]
 # ------ 核心配置(必须) ------ #
-https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon-parser.plugin, tag = 资源解析器, enabled = true
+https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon-parser.plugin, tag = 新版资源解析器插件, enabled = true
 
 # ------ 会员解锁 ------ #
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag = ELSASpeak解锁, enabled = false

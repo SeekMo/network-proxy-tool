@@ -53,8 +53,8 @@ internet-test-url = http://www.apple.com/generate_204
 # 节点测速超时时间，单位为秒
 test-timeout = 3
 
-# 订阅资源解析脚本
-resource-parser = https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-parser.loon.min.js
+# 订阅资源解析脚本(旧版配置方式，新版 Loon 3.5.0(969)及以上版本配置在 [Plugin] 中)
+#resource-parser = https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-parser.loon.min.js
 
 # 根据 Wi-Fi 或蜂窝网络切换 Loon 模式，用于指定SSID下流量模式切换。default表示默认，cellular表示蜂窝，支持三种值：RULE、DIRECT、PROXY
 #ssid-trigger = "default":RULE,"cellular":RULE,"ASUS":DIRECT,"TPLINK":PROXY 
@@ -125,8 +125,8 @@ dns-reject-mode = LoopbackIP
 # 远程订阅服务
 # =====================================
 [Remote Proxy]
-#SubProxy = https://sub.store/download/sub,parser-enabled = false,udp=false,fast-open=false,vmess-aead=true,skip-cert-verify=default,enabled = true,flexible-sni=true,img-url = flame.fill
-
+# SubProxy = https://sub.store/download/sub, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-enabled = true, enabled = true
+# 公益订阅1 = https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-enabled = true, enabled = true
 
 # =====================================
 # 代理链
@@ -365,6 +365,9 @@ FINAL, 兜底线路
 # 远程插件
 # =====================================
 [Plugin]
+# ------ 核心配置(必须) ------ #
+https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon-parser.plugin, tag = 资源解析器, enabled = true
+
 # ------ 会员解锁 ------ #
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag = ELSASpeak解锁, enabled = false
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag = 多邻国解锁, enabled = false

@@ -129,7 +129,7 @@ dns-reject-mode = LoopbackIP
 # 旧版解析器脚本，[General] - resource-parser
 # 公益订阅1 = https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-enabled = true, enabled = true
 # 新版解析器插件，[Plugin]
-公益订阅1 = https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-plugin=新版资源解析器插件, enabled = true
+# 公益订阅1 = https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml, udp = true, block-quic = true, fast-open = default, vmess-aead = default, skip-cert-verify = false, flexible-sni = false, img-url = airplane.departure, parser-plugin=新版资源解析器插件, enabled = true
 
 
 # =====================================

@@ -373,10 +373,10 @@ FINAL, 兜底线路
 https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon-parser.plugin, tag = 新版资源解析器插件, enabled = true
 
 # ------ 节点检测 ------ #
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality-Web/IPQuality-Web.plugin, tag = 节点IP质量检测(混合模式), enabled = true
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality-Web/IPQuality-Web.plugin, tag = 节点IP质量检测(混合模式), enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality/IPQuality.plugin, tag = 节点IP质量检测, enabled = ture
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Block_Check/Block_Check.plugin, tag = 节点连通性检测, enabled = ture
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/NodeTools/NodeTools.plugin, tag = 节点检测工具𝕂, enabled = ture
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/NodeTools/NodeTools.plugin, tag = 节点检测工具𝕂, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Node_detection_tool.plugin, tag = 节点检测工具, enabled = false
 
 # ------ 会员解锁 ------ #

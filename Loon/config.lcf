@@ -1,6 +1,6 @@
 ################# 20260816 创建 #################
 # 基于以下配置文件作为参考进行修改
-#  - https://github.com/fmz200/wool_scripts/blob/main/Loon/config/Loon.conf 修改
+#  - https://github.com/fmz200/wool_scripts/blob/main/Loon/config/Loon.conf
 
 # Loon 官方指南
 #  - https://github.com/Loon0x00/LoonManual
@@ -21,9 +21,10 @@ skip-proxy = localhost, *.local, captive.apple.com, e.crashlytics.com, www.baidu
 
 # > DNS 服务器，多个 DNS 服务器使用英文逗号分隔
 # 普通 UDP DNS，system 表示系统 DNS
-dns-server = system,119.29.29.29,114.114.114.114,223.5.5.5,223.6.6.6
+dns-server = 223.5.5.5,119.29.29.29,114.114.114.114,223.6.6.6,system
 # DNS over HTTPS
-doh-server = https://dns.alidns.com/dns-query,https://223.5.5.5/dns-query,https://223.6.6.6/dns-query,https://1.12.12.12/dns-query,https://120.53.53.53/dns-query,https://doh.pub/dns-query
+doh-server = https://doh.pub/dns-query,https://dns.alidns.com/dns-query,https://223.5.5.5/dns-query,https://223.6.6.6/dns-query,https://1.12.12.12/dns-query,https://120.53.53.53/dns-query
+
 # DNS over QUIC，默认端口为 784
 doq-server = quic://dns.alidns.com:853,quic://223.6.6.6:853,quic://223.5.5.5:853
 # DNS over HTTP/3

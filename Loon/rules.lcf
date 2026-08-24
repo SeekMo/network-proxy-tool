@@ -372,12 +372,20 @@ FINAL, 兜底线路
 # ------ 核心配置(必须) ------ #
 https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon-parser.plugin, tag = 新版资源解析器插件, enabled = true
 
+# ------ 节点检测 ------ #
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality-Web/IPQuality-Web.plugin, tag = 节点IP质量检测(混合模式), enabled = true
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality/IPQuality.plugin, tag = 节点IP质量检测, enabled = ture
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Block_Check/Block_Check.plugin, tag = 节点连通性检测, enabled = ture
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/NodeTools/NodeTools.plugin, tag = 节点检测工具𝕂, enabled = ture
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Node_detection_tool.plugin, tag = 节点检测工具, enabled = false
+
 # ------ 会员解锁 ------ #
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag = ELSASpeak解锁, enabled = false
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag = 多邻国解锁, enabled = false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag = 剪映解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JianYing/JianYing.plugin, tag = 剪映解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/KuGouMusic/KuGou.plugin, tag = 酷狗音乐解锁, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/MeiTuXiuXiu/MeiTuXiuXiu.plugin, tag = 美图秀秀解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/PikPak/PikPak.plugin, tag = PikPak解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Nicegram/Nicegram.plugin, tag = Nicegram解锁, enabled = false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag = Spotify解锁, enabled = false
@@ -386,8 +394,9 @@ https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/HaiJiao/HaiJiao.plugin, tag = 海角社区解锁, enabled = false
 
 # ------ 广告净化 ------ #
-https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = true
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/ASN-China/Loon-HTTPDNS.Block.plugin, tag = HTTPDNS拦截器, enabled = false
+https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = false
+http://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = false
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/ASN-China/Loon-HTTPDNS.Block.plugin, tag = HTTPDNS拦截器, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag = YouTube去广告, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Weixin_Official_Accounts_remove_ads.plugin, tag = 微信公众号去广告, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/WexinMiniPrograms_Remove_ads.plugin, tag = 微信小程序去广告, enabled = true
@@ -414,9 +423,6 @@ https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GitRawAutoCDN/Git
 
 # ------ 功能增强 ------ #
 https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = ture
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality/IPQuality.plugin, tag = 节点检测工具, enabled = ture
-https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Node_detection_tool.plugin, tag = 节点检测工具, enabled = false
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Block_Check/Block_Check.plugin, tag = 节点连通性检测, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/AppleWeatherEnhancer.plugin, tag = Apple天气增强, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag = 京东比价, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JD_Price/JD_Price.plugin, tag = 京东比价, enabled = false

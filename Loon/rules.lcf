@@ -381,7 +381,8 @@ https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Node_detection
 
 # ------ 会员解锁 ------ #
 https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ELSA-Speak/elsa.plugin, tag = ELSASpeak解锁, enabled = false
-https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo.plugin, tag = 多邻国解锁, enabled = false
+https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/ting_en/ting_en.plugin, tag = 每日英语听力, enabled = false
+https://raw.githubusercontent.com/Leslie159357/loon-plugin/main/plugins/Duolingo/duolingo_v11.plugin, tag = 多邻国解锁, enabled = false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/JianYing.plugin, tag = 剪映解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JianYing/JianYing.plugin, tag = 剪映解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/KuGouMusic/KuGou.plugin, tag = 酷狗音乐解锁, enabled = false

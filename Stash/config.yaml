@@ -93,8 +93,30 @@ script-providers:
 # 脚本
 # =====================================
 script:
-  shortcuts: # 使用表达式编写自定义规则
-    # quic: network == 'udp' and (dst_port == 443 or dst_port == 4483 or dst_port == 9305) # 可以在规则中引用
+  # 使用表达式编写自定义规则
+  shortcuts: 
+    # QUIC 回落：拒绝 UDP 443 等端口，迫使浏览器/App 回落到 TCP + TLS
+    # 注意：[rules] 配置项的 "SCRIPT,quic,REJECT,no-track" 依赖此定义，
+    #       若不想拦截 QUIC，请同时注释掉 [rules] 段那一行，而不是只注释这里。
+    quic: network == 'udp' and (dst_port == 443 or dst_port == 4483 or dst_port == 9305)
+
+    # WebRTC 硬编码 STUN 拦截 —— 补齐 fake-ip-filter 管不到的绕过路径
+    # 【为什么需要】fake-ip-filter 只能拦「先查 DNS 再连接」的流量。
+    #   网页 JS 可以直接对 STUN 服务器的 IP 字面量发 UDP（例如
+    #   74.125.250.129:19302），全程不产生 DNS 查询，fake-ip 完全失效。
+    #   只有按端口拦截才能封死这条路。
+    # 【端口选择】19302-19309 是 Google 公共 STUN 的固定端口，也是浏览器
+    #   WebRTC 的事实默认。游戏主机不使用这段端口，因此拦截它不影响
+    #   PS / Switch / Xbox 的 NAT 检测（主机走的是 3478-3480）。
+    webrtc-stun: network == 'udp' and (dst_port == 19302 or dst_port == 19303 or dst_port == 19304 or dst_port == 19305 or dst_port == 19306 or dst_port == 19307 or dst_port == 19308 or dst_port == 19309)
+
+    # 【严格模式，默认关闭】连标准 STUN/TURN 端口一起拦。
+    #   3478/3479 = STUN/TURN 明文，5349/5350 = STUN/TURN over TLS/DTLS。
+    #   ⚠️ 代价明确：PS / Switch / Xbox 正是用 3478-3480 做 NAT 类型检测，
+    #      开启后主机联机会退化为 NAT 3（严格），部分游戏无法组队。
+    #      同时会影响所有依赖标准 STUN 的桌面通话软件。
+    #   仅在「完全不联机、隐私优先级最高」时放开，并同步启用下方 [rules] 里对应行。
+    # webrtc-stun-strict: network == 'udp' and (dst_port == 3478 or dst_port == 3479 or dst_port == 5349 or dst_port == 5350)
 
 
 # =====================================
@@ -180,7 +202,7 @@ dns:
  
   # 在以下列表的域名将不会被解析为 fake ip，这些域名相关的解析请求将会返回它们真实的 IP 地址
   fake-ip-filter:
-    # 本地 / 局域网
+    # > 本地 / 局域网
     - '*.lan'
     - '*.direct'
     - '*.localdomain'
@@ -193,16 +215,57 @@ dns:
     - '*.corp'
     - '*.internal'
 
-    # STUN / TURN
-    - 'stun.*'
-    - '+.stun.*.*'
-    - '+.stun.*.*.*'
-    - '+.stun.*.*.*.*'
-    - '+.stun.*.*.*.*.*'
-    - 'global.stun.twilio.com'
-    - 'global.turn.twilio.com'
+    # > STUN / TURN —— 隐私与 P2P 的取舍区（当前策略：隐私优先）
+    # ---------------------------------------------------------------
+    # 【原理】STUN 的作用是让客户端问服务器「你看到的我的公网 IP 是多少」。
+    #   · 放行（写进本列表）→ 返回真实 IP → STUN 可用 → P2P 打洞成功
+    #                                      → 但浏览器 WebRTC 也能拿到你的真实公网 IP
+    #   · 屏蔽（注释掉）    → 返回 fake IP → STUN 请求发不出去
+    #                                      → WebRTC 的 srflx candidate 收集失败，探测不到真实 IP
+    #
+    # 【自测】开启代理后访问 https://browserleaks.com/webrtc
+    #   若显示的 IP 与 https://httpbin.org/ip 不一致，即存在泄漏。
+    #
+    # 【更优解】若节点支持 UDP 转发（proxies 里 udp: true）且使用 TUN 模式，
+    #   可以放行 STUN 的同时把它走代理 —— 此时 WebRTC 拿到的是节点 IP，
+    #   既不泄漏也能打洞。此方案需在 [rules]配置项 为下列域名指定代理策略。
+    # ---------------------------------------------------------------
 
-    # 网络连通性检测 / Captive Portal
+    # 【A 组】通用公共 STUN 通配 —— 泄漏风险最高，默认屏蔽
+    # 这些通配会覆盖互联网上任意 STUN 服务器，等于对所有网页开放 IP 探测。
+    # 除非明确需要，否则不要放开。
+    # - 'stun.*'
+    # - '+.stun.*.*'
+    # - '+.stun.*.*.*'
+    # - '+.stun.*.*.*.*'
+    # - '+.stun.*.*.*.*.*'
+
+    # 【B 组】浏览器 WebRTC 通话服务 —— 中等风险，按需放开
+    # 这些是网页版视频通话真正会用到的 STUN/TURN 服务器。
+    # 放开后 Google Meet / 网页版会议 / Discord 网页端的 P2P 才能正常建立，
+    # 但同一批服务器也是恶意网页探测真实 IP 的首选目标（尤其 Google 那几个，
+    # 它们是 WebRTC 的事实默认 STUN）。要用视频会议时再逐条放开。
+    # - 'stun.l.google.com'
+    # - 'stun1.l.google.com'
+    # - 'stun2.l.google.com'
+    # - 'stun3.l.google.com'
+    # - 'stun4.l.google.com'
+    # - 'global.stun.twilio.com'
+    # - 'global.turn.twilio.com'
+
+    # 【C 组】独立 App 的音视频通话 —— 无需在此配置，说明见下
+    # Telegram / WhatsApp / 微信 / FaceTime 的语音视频，走的是各自私有的
+    # reflector / relay 服务器（如 Telegram 的 DC 节点、WhatsApp 的 relay），
+    # 并不依赖公共 STUN 域名，因此 A/B 两组的开关不影响它们。
+    # 它们也不构成浏览器 WebRTC 泄漏面 —— 网页 JS 无法调用这些 App 的通道。
+    # 若这类 App 通话异常，应排查节点 UDP 支持与分流规则，而不是往这里加域名。
+
+    # 【D 组】游戏主机 STUN —— 低风险，默认放开
+    # 仅主机固件的 NAT 类型检测会请求，浏览器 JS 触及不到，不构成泄漏面。
+    # 屏蔽只会让 PS / Switch / Xbox 联机变差，没有隐私收益。见下方「游戏平台」分组。
+    - '+.stun.playstation.net'
+
+    # > 网络连通性检测 / Captive Portal
     - 'cable.auth.com'
     - 'network-test.debian.org'
     - 'detectportal.firefox.com'
@@ -214,7 +277,7 @@ dns:
     - 'clients3.google.com'
     - 'clients4.google.com'
 
-    # NTP 时间同步
+    # > NTP 时间同步
     - 'pool.ntp.org'
     - '*.pool.ntp.org'
     - '*.ntp.org.cn'
@@ -225,7 +288,7 @@ dns:
     - 'time.*.gov'
     - 'time.*.edu.cn'
 
-    # 路由管理
+    # > 路由管理
     - 'heartbeat.belkin.com'
     - '*.linksys.com'
     - '*.linksyssmartwifi.com'
@@ -236,7 +299,7 @@ dns:
     - '*.mymeraki.com'
     - '*.gl-inet.com'
 
-    # Apple 服务
+    # > Apple 服务
     - 'mesu.apple.com'
     - 'swscan.apple.com'
     - 'swquery.apple.com'
@@ -246,9 +309,8 @@ dns:
     - '*.apple.com.edgesuite.net'
     - 'push-apple.com.akadns.net'
 
-    # Google 服务
+    # > Google 服务
     - 'lens.l.google.com'
-    - 'stun.l.google.com'
 
     # GitHub SSH connection
     - '+.github.com'
@@ -258,7 +320,7 @@ dns:
     - 'github.com'
     - '*.github.com'
 
-    # 运营商一键登录 / 认证
+    # > 运营商一键登录 / 认证
     - '*.cmpassport.com'
     - 'id6.me'
     - 'open.e.189.cn'
@@ -274,18 +336,18 @@ dns:
     - '*.10099.com.cn'
     - '*.microdone.cn'
 
-    # 银行 / 支付
+    # > 银行 / 支付
     - '*.pingan.com.cn'
     - '*.cmbchina.com'
 
-    # 腾讯
+    # > 腾讯
     - 'localhost.ptlogin2.qq.com'
     - 'localhost.sec.qq.com'
 
-    # 流媒体
+    # > 流媒体
     - '*.mcdn.bilivideo.cn'
 
-    # 音乐服务（解锁）
+    # > 音乐服务（解锁）
     - 'music.163.com'
     - '*.music.163.com'
     - '*.126.net'
@@ -309,10 +371,8 @@ dns:
     - 'music.migu.cn'
     - '*.music.migu.cn'
 
-    # 游戏平台
+    # > 游戏平台
     - '+.srv.nintendo.net'
-    - '+.stun.playstation.net'
-    - '+.stun.*.*'
     - 'xbox.*.microsoft.com'
     - 'xnotify.xboxmojie.app'
     - '+.ipv6.microsoft.com'
@@ -328,12 +388,12 @@ dns:
     - '*.ff14.sdo.com'
     - 'ff.dorado.sdo.com'    
 
-    # Windows AD 域控
+    # > Windows AD 域控
     - 'PDC._msDCS.*.*'
     - 'DC._msDCS.*.*'
     - 'GC._msDCS.*.*'
 
-    # 其它
+    # > 其它
     - 'proxy.golang.org'
 
 
@@ -893,8 +953,22 @@ rule-providers:
 # 将远程分流的规则集合，进行本地分流
 # ===================================== 
 rules:
-  # 官方默认规则
+  # QUIC 回落
   - SCRIPT,quic,REJECT,no-track
+
+  # WebRTC 防泄漏 —— 必须放在所有 RULE-SET 之前，否则会被兜底规则抢先匹配
+  # 拦截硬编码 IP 的 STUN 请求（fake-ip-filter 覆盖不到的绕过路径）。
+  # 与 dns.fake-ip-filter 的 STUN【A/B 组】配合使用：
+  #   · fake-ip-filter 挡住「查 DNS 走域名」的 STUN
+  #   · 本规则挡住「直连 IP 字面量」的 STUN
+  # 两者都到位，WebRTC 才无法探测真实公网 IP。
+  # 自测：https://browserleaks.com/webrtc 与 https://httpbin.org/ip 应一致。
+  - SCRIPT,webrtc-stun,REJECT,no-track
+
+  # 严格模式：同时拦截标准 STUN/TURN 端口 3478/3479/5349/5350。
+  #    会导致 PS / Switch / Xbox NAT 类型变严格，联机受影响。
+  #    放开前请先取消上方 script.shortcuts 中 webrtc-stun-strict 的注释。
+  # - SCRIPT,webrtc-stun-strict,REJECT,no-track
 
   # 自定义规则
   - DOMAIN-KEYWORD, apple, 苹果服务

@@ -149,51 +149,49 @@ dns:
     #   - https://dns.alidns.com/dns-query
     #   - https://doh.pub/dns-query
     # AI 服务使用 Cloudflare DNS
-    "+.openai.com": https://cloudflare-dns.com/dns-query
-    "+.chatgpt.com": https://cloudflare-dns.com/dns-query
-    "+.anthropic.com": https://cloudflare-dns.com/dns-query
-    "+.claude.ai": https://cloudflare-dns.com/dns-query
-    "+.gemini.google.com": https://cloudflare-dns.com/dns-query
-    "+.perplexity.ai": https://cloudflare-dns.com/dns-query
+    '+.openai.com': https://cloudflare-dns.com/dns-query
+    '+.chatgpt.com': https://cloudflare-dns.com/dns-query
+    '+.anthropic.com': https://cloudflare-dns.com/dns-query
+    '+.claude.ai': https://cloudflare-dns.com/dns-query
+    '+.gemini.google.com': https://cloudflare-dns.com/dns-query
+    '+.perplexity.ai': https://cloudflare-dns.com/dns-query
     # Google
-    "+.google.com": https://dns.google/dns-query
-    "+.googleapis.com": https://dns.google/dns-query
-    "+.gstatic.com": https://dns.google/dns-query
-    "+.ggpht.com": https://dns.google/dns-query
-    "+.youtube.com": https://dns.google/dns-query
-    "+.ytimg.com": https://dns.google/dns-query
-    "+.googlevideo.com": https://dns.google/dns-query
+    '+.google.com': https://dns.google/dns-query
+    '+.googleapis.com': https://dns.google/dns-query
+    '+.gstatic.com': https://dns.google/dns-query
+    '+.ggpht.com': https://dns.google/dns-query
+    '+.youtube.com': https://dns.google/dns-query
+    '+.ytimg.com': https://dns.google/dns-query
+    '+.googlevideo.com': https://dns.google/dns-query
     # GitHub 
-    "+.github.com": https://dns.google/dns-query
-    "+.githubusercontent.com": https://dns.google/dns-query
-    "+.githubassets.com": https://dns.google/dns-query
+    '+.github.com': https://dns.google/dns-query
+    '+.githubusercontent.com': https://dns.google/dns-query
+    '+.githubassets.com': https://dns.google/dns-query
     # Telegram
-    "+.telegram.org": https://cloudflare-dns.com/dns-query
-    "+.t.me": https://cloudflare-dns.com/dns-query
+    '+.telegram.org': https://cloudflare-dns.com/dns-query
+    '+.t.me': https://cloudflare-dns.com/dns-query
     # 国内域名使用国内 DNS
     # 'geosite:cn':
     #   - 223.5.5.5
     #   - 119.29.29.29
-    "+.cn": https://dns.alidns.com/dns-query
-    "+.bilibili.com": https://dns.alidns.com/dns-query
-    "+.douyin.com": https://dns.alidns.com/dns-query
-    "+.ixigua.com": https://dns.alidns.com/dns-query
-    "+.toutiao.com": https://dns.alidns.com/dns-query
+    '+.cn': https://dns.alidns.com/dns-query
+    '+.douyin.com': https://dns.alidns.com/dns-query
+    '+.bilibili.com': https://dns.alidns.com/dns-query
  
   # 在以下列表的域名将不会被解析为 fake ip，这些域名相关的解析请求将会返回它们真实的 IP 地址
   fake-ip-filter:
     # 本地 / 局域网
-    - "*.lan"
+    - '*.lan'
     - '*.direct'
-    - "*.localdomain"
-    - "*.example"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
-    - "*.corp"
-    - "*.internal"
+    - '*.localdomain'
+    - '*.example'
+    - '*.invalid'
+    - '*.localhost'
+    - '*.test'
+    - '*.local'
+    - '*.home.arpa'
+    - '*.corp'
+    - '*.internal'
 
     # STUN / TURN
     - 'stun.*'
@@ -209,12 +207,12 @@ dns:
     - 'network-test.debian.org'
     - 'detectportal.firefox.com'
     - 'resolver1.opendns.com'
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
-    - "captive.apple.com"
-    - "*.connectivitycheck.gstatic.com"
-    - "clients3.google.com"
-    - "clients4.google.com"
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - 'captive.apple.com'
+    - '*.connectivitycheck.gstatic.com'
+    - 'clients3.google.com'
+    - 'clients4.google.com'
 
     # NTP 时间同步
     - 'pool.ntp.org'
@@ -228,37 +226,37 @@ dns:
     - 'time.*.edu.cn'
 
     # 路由管理
-    - "heartbeat.belkin.com"
-    - "*.linksys.com"
-    - "*.linksyssmartwifi.com"
-    - "*.router.asus.com"
-    - "*.hiwifi.com"
-    - "*.miwifi.com"
-    - "*.routerlogin.com"
-    - "*.mymeraki.com"
-    - "*.gl-inet.com"
+    - 'heartbeat.belkin.com'
+    - '*.linksys.com'
+    - '*.linksyssmartwifi.com'
+    - '*.router.asus.com'
+    - '*.hiwifi.com'
+    - '*.miwifi.com'
+    - '*.routerlogin.com'
+    - '*.mymeraki.com'
+    - '*.gl-inet.com'
 
     # Apple 服务
-    - "mesu.apple.com"
-    - "swscan.apple.com"
-    - "swquery.apple.com"
-    - "swdownload.apple.com"
-    - "swcdn.apple.com"
-    - "swdist.apple.com"
-    - "*.apple.com.edgesuite.net"
-    - "push-apple.com.akadns.net"
+    - 'mesu.apple.com'
+    - 'swscan.apple.com'
+    - 'swquery.apple.com'
+    - 'swdownload.apple.com'
+    - 'swcdn.apple.com'
+    - 'swdist.apple.com'
+    - '*.apple.com.edgesuite.net'
+    - 'push-apple.com.akadns.net'
 
     # Google 服务
-    - "lens.l.google.com"
-    - "stun.l.google.com"
+    - 'lens.l.google.com'
+    - 'stun.l.google.com'
 
     # GitHub SSH connection
-    - "+.github.com"
-    - "+.githubusercontent.com"
-    - "+.githubapp.com"
-    - "+.githubassets.com"
-    - "github.com"
-    - "*.github.com"
+    - '+.github.com'
+    - '+.githubusercontent.com'
+    - '+.githubapp.com'
+    - '+.githubassets.com'
+    - 'github.com'
+    - '*.github.com'
 
     # 运营商一键登录 / 认证
     - '*.cmpassport.com'
@@ -281,8 +279,8 @@ dns:
     - '*.cmbchina.com'
 
     # 腾讯
-    - "localhost.ptlogin2.qq.com"
-    - "localhost.sec.qq.com"
+    - 'localhost.ptlogin2.qq.com'
+    - 'localhost.sec.qq.com'
 
     # 流媒体
     - '*.mcdn.bilivideo.cn'
@@ -312,23 +310,23 @@ dns:
     - '*.music.migu.cn'
 
     # 游戏平台
-    - "+.srv.nintendo.net"
-    - "+.stun.playstation.net"
-    - "+.stun.*.*"
-    - "xbox.*.microsoft.com"
-    - "xnotify.xboxmojie.app"
-    - "+.ipv6.microsoft.com"
-    - "+.battlenet.com.cn"
-    - "+.wotgame.cn"
-    - "+.wggames.cn"
-    - "+.wowsgame.cn"
-    - "+.wargaming.net"
-    - "+.pvp.net"
-    - "*.square-enix.com"
-    - "*.finalfantasyxiv.com"
-    - "*.ffxiv.com"
-    - "*.ff14.sdo.com"
-    - "ff.dorado.sdo.com"    
+    - '+.srv.nintendo.net'
+    - '+.stun.playstation.net'
+    - '+.stun.*.*'
+    - 'xbox.*.microsoft.com'
+    - 'xnotify.xboxmojie.app'
+    - '+.ipv6.microsoft.com'
+    - '+.battlenet.com.cn'
+    - '+.wotgame.cn'
+    - '+.wggames.cn'
+    - '+.wowsgame.cn'
+    - '+.wargaming.net'
+    - '+.pvp.net'
+    - '*.square-enix.com'
+    - '*.finalfantasyxiv.com'
+    - '*.ffxiv.com'
+    - '*.ff14.sdo.com'
+    - 'ff.dorado.sdo.com'    
 
     # Windows AD 域控
     - 'PDC._msDCS.*.*'
@@ -336,7 +334,7 @@ dns:
     - 'GC._msDCS.*.*'
 
     # 其它
-    - "proxy.golang.org"
+    - 'proxy.golang.org'
 
 
 # =====================================
@@ -642,10 +640,10 @@ rule-providers:
     type: http
     behavior: domain
     # format: yaml
-    # url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AdvertisingLite/AdvertisingLite_Domain.yaml"
+    # url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AdvertisingLite/AdvertisingLite_Domain.yaml
     # path: ./rules/adblock.yaml
     format: text
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
     path: ./rules/adblock-reject.yaml
     interval: 86400
 

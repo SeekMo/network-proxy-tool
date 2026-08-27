@@ -30,7 +30,7 @@ http:
   # 捕获后的连接可以使用高级功能，例如重写和脚本
   force-http-engine:
   # 无 MitM / 脚本需求时，可先将其屏蔽，避免全量拦截 80 端口造成的纯性能开销
-    #- '*:80'
+    # - '*:80'
  
   # 以 PKCS #12 编码的 CA 证书
   ca: ''
@@ -51,8 +51,8 @@ http:
 
   # HTTP(S) 重写，支持 header、302、307、reject 多种策略
   url-rewrite:
-    # - ^http://g\.cn http://www.google.com header # 重写请求头的域名
-    # - ^https?://ad\.example - reject # 拒绝请求
+    - ^http://g\.cn http://www.google.com header # 重写请求头的域名
+    - ^https?://ad\.example - reject # 拒绝请求
     - ^https?://www\.google\.cn https://www.google.com 302 # 直接返回一个 302 重定向的响应
  
   # 使用 JavaScript 脚本改写 HTTP(S) 请求

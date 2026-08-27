@@ -213,7 +213,7 @@ RES_Filter = NameRegex, FilterKey = "🏠|静态|住宅|(?i)ISP"
 VPS01_Filter = NameRegex, FilterKey = "Pri_V_01|P_VPS_01"
 VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
 SUB_Free = NameRegex, FilterKey = "🟢|🟡|🟠"
-HK_Filter = NameRegex, FilterKey = "(?=.*(🇭🇰|HK|(?i)Hong|香港))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
+HK_Filter = NameRegex, FilterKey = "(?=.*(🇭🇰|🇲🇴|HK|(?i)Hong|港|澳))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 TW_Filter = NameRegex, FilterKey = "(?=.*(🇹🇼|TW|(?i)Taiwan|台湾|台灣))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 SG_Filter = NameRegex, FilterKey = "(?=.*(🇸🇬|SG|(?i)Sing|新加坡|狮城))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 JP_Filter = NameRegex, FilterKey = "(?=.*(🇯🇵|JP|(?i)Japan|(?i)Tokyo|日本|东京|大阪))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
@@ -223,7 +223,7 @@ CA_Filter = NameRegex, FilterKey = "(?=.*(🇨🇦|CA|(?i)Canada|加拿大))^((?
 
 
 # =====================================
-# 远程分流规则
+# 远程分流规则集
 # 将网络请求进行分流，网络请求的走向(是否能成功访问)由匹配到的策略组决定
 # =====================================
 [Remote Rule]
@@ -277,7 +277,7 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/YouTub
 https://cdn.jsdelivr.net/gh/iab0x00/ProxyRules@main/Rule/Crypto.txt, policy = CryptoCurrency, tag = 数字加密, enabled = true
 
 # Apple
-#https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Apple/Apple.list, policy = 苹果服务, tag = 苹果服务, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Apple/Apple.list, policy = 苹果服务, tag = 苹果服务, enabled = true
 # Microsoft
 #https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Microsoft/Microsoft.list, policy = 微软服务, tag = 微软服务, enabled = true
 # Github
@@ -309,7 +309,7 @@ https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Porn.list, poli
 # Bilibili
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/BiliBili/BiliBili.list, policy = 调控线路, tag = 哔哩哔哩, enabled = true
 
-# 兜底
+# 直连/代理 兜底
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/China/China.list, policy = DIRECT, tag = 国内直连, enabled = true
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global/Global.list, policy = 兜底线路, tag = 国际代理, enabled = true
 

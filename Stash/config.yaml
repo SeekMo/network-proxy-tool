@@ -29,7 +29,8 @@ http:
   # 强制使用 HTTP 引擎处理 TCP 连接
   # 捕获后的连接可以使用高级功能，例如重写和脚本
   force-http-engine:
-    - '*:80'
+  # 无 MitM / 脚本需求时，可先将其屏蔽，避免全量拦截 80 端口造成的纯性能开销
+    #- '*:80'
  
   # 以 PKCS #12 编码的 CA 证书
   ca: ''
@@ -132,66 +133,87 @@ hosts:
 
 # =====================================
 # DNS 服务器配置
+# 本段参数以 Stash 官方文档为准：https://stash.wiki/features/dns-server
+# dns 下合法键仅 7 个：nameserver / default-nameserver / proxy-server-nameserver /
+#                     nameserver-policy / follow-rule / skip-cert-verify / fake-ip-filter
+# 顶层另有 hosts（见 https://stash.wiki/features/hostname-mapping）
 # =====================================
 dns:
-  enable: true
-  ipv6: true
-  # use-hosts: true
-  # respect-rules: true
-  # DNS 监听地址由 FlClash 客户端管理，模板不设置：
-  # listen: 127.0.0.1:1053
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  
-  # 以下填写的 DNS 服务器将会被用来解析 DNS 服务的域名
-  # 仅填写 DNS 服务器的 IP 地址
+  # 加密 DNS Bootstrap：仅用于解析下方 nameserver 中 DNS 服务器自身的域名。
+  # 官方原文：除 system 外，服务器地址必须使用 IP。此处需保证绝对可达，故用纯 IP。
   default-nameserver:
+    # DoH3 基于 QUIC，握手更快、抗丢包更好（官方示例即此地址），但 1.1.1.1 在国内常被干扰，作为 bootstrap 不够稳，默认不启用
+    # - 'https://1.1.1.1/dns-query#h3=true'
     - 223.5.5.5
     - 119.29.29.29
     - 114.114.114.114
     - 119.28.28.28
     - system # 使用 iOS 系统 DNS
-  # 支持 UDP / TCP / DoT / DoH 协议的 DNS 服务，可以指明具体的连接端口号。
-  # 所有 DNS 请求将会直接发送到服务器，不经过任何代理。
-  # Stash 会使用最先获得的解析记录回复 DNS 请求
+
+  # 支持 system / UDP / TCP / DoT / DoH / DoH3 / DoQ 协议，可指明具体端口号。
+  # 所有 DNS 请求直接发送到服务器，不经过任何代理（除非开启 follow-rule）。
+  # Stash 会并发请求所有服务器，并采用最快响应的结果
   nameserver:
     # 不建议配置超过 2 个 DNS 服务器，会增加系统功耗
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-    - system # 使用系统 DNS
- 
+
+    # DoH3 / DoQ：Stash 均已支持。但 fake-ip 下真正会发起上游查询的只有
+    # fake-ip-filter 中的域名，那些几乎全是国内/本地域名 —— 用境外加密 DNS
+    # 解析只会更慢、破坏 CDN 就近，且因「取最快响应」而永远竞争不过上面两条，
+    # 等于白白增加并发查询与耗电。故默认不启用，需要时放开。
+    # - 'https://1.1.1.1/dns-query#h3=true'  # DoH3；地址必须加引号，否则 #h3=true 被 YAML 当作注释
+    # - quic://dns.adguard.com:853           # DoQ
+
+    # 隐私提示：既然取「最快响应」，运营商 DNS 几乎总是快于加密 DNS，只要保留 system，上面两条 DoH 就基本不会被采用，明文查询仍可被运营商观测。要真正提升 DNS 隐私，应屏蔽 system，而不是继续往下追加加密 DNS。
+    # 注意：屏蔽 system 后，连接 酒店/机场 这类需要网页登录的 WiFi 时会卡住，原因：DoH 走不通 → DNS 全断 → 连 captive.apple.com 都解析不了 → 弹不出登录页。可以先登录连接 WiFi 成功后，再启动 代理软件。
+    # - system # 使用系统 DNS
+
+  # DNS 查询跟随规则。默认 Stash 的 DNS 查询直接出站、不经代理。
+  # 官方警告：绝大部分场景无需开启，会破坏云服务商 CDN 全球优化策略并增加延迟。
+  # 注意它并不能让下方 nameserver-policy 对「走代理的域名」生效，原因见 policy 内注释。
+  follow-rule: false
+
+  # 代理服务器域名解析（iOS/tvOS 3.6+、macOS 4.3+）
+  # 独立查询链路、不跟随代理规则，避免「连节点前要先解析节点域名」的递归查询
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - https://dns.alidns.com/dns-query
+
   # 跳过证书验证，解决部分兼容性问题 https://help.nextdns.io/t/g9hdkjz
   skip-cert-verify: false
- 
-  # DNS 分流策略，对部分域名使用单独的 DNS 服务器
+
+  # DNS 分流策略，对部分域名使用单独的 DNS 服务器。
+  # 支持精确域名、通配域名、geosite:<name>；优先级：精确 > 通配 > geosite
   nameserver-policy:
-    # 'www.baidu.com': 114.114.114.114
-    # '+.internal.crop.com': system
-    # '*.example.com':
-    #   - https://dns.alidns.com/dns-query
-    #   - https://doh.pub/dns-query
-    # AI 服务使用 Cloudflare DNS
-    '+.openai.com': https://cloudflare-dns.com/dns-query
-    '+.chatgpt.com': https://cloudflare-dns.com/dns-query
-    '+.anthropic.com': https://cloudflare-dns.com/dns-query
-    '+.claude.ai': https://cloudflare-dns.com/dns-query
-    '+.gemini.google.com': https://cloudflare-dns.com/dns-query
-    '+.perplexity.ai': https://cloudflare-dns.com/dns-query
-    # Google
-    '+.google.com': https://dns.google/dns-query
-    '+.googleapis.com': https://dns.google/dns-query
-    '+.gstatic.com': https://dns.google/dns-query
-    '+.ggpht.com': https://dns.google/dns-query
-    '+.youtube.com': https://dns.google/dns-query
-    '+.ytimg.com': https://dns.google/dns-query
-    '+.googlevideo.com': https://dns.google/dns-query
-    # GitHub 
-    '+.github.com': https://dns.google/dns-query
-    '+.githubusercontent.com': https://dns.google/dns-query
-    '+.githubassets.com': https://dns.google/dns-query
-    # Telegram
-    '+.telegram.org': https://cloudflare-dns.com/dns-query
-    '+.t.me': https://cloudflare-dns.com/dns-query
+    # 为何下方境外域名全部屏蔽：
+    #   不在 fake-ip-filter 中的域名会直接返回假 IP，不产生上游查询，因此为「走代理的域名」指定 DoH 属于无效配置 —— follow-rule 也改变不了这一点。
+    #   要让其生效必须先把域名加入 fake-ip-filter，但那样客户端会拿到真实 IP 进行直连，Stash 只看得到目标 IP，DOMAIN 类规则失配，分流反而降级。
+    #   而 fake-ip 下这些域名本就由节点在出口侧解析（无污染、CDN 就近），已是更优解。【保留的三条】仅对 fake-ip-filter 中的对应域名生效（如 +.kuwo.cn、*.melogin.cn）
+    
+    # # AI 服务使用 Cloudflare DNS
+    # '+.openai.com': https://cloudflare-dns.com/dns-query
+    # '+.chatgpt.com': https://cloudflare-dns.com/dns-query
+    # '+.anthropic.com': https://cloudflare-dns.com/dns-query
+    # '+.claude.ai': https://cloudflare-dns.com/dns-query
+    # '+.gemini.google.com': https://cloudflare-dns.com/dns-query
+    # '+.perplexity.ai': https://cloudflare-dns.com/dns-query
+    # # Google
+    # '+.google.com': https://dns.google/dns-query
+    # '+.googleapis.com': https://dns.google/dns-query
+    # '+.gstatic.com': https://dns.google/dns-query
+    # '+.ggpht.com': https://dns.google/dns-query
+    # '+.youtube.com': https://dns.google/dns-query
+    # '+.ytimg.com': https://dns.google/dns-query
+    # '+.googlevideo.com': https://dns.google/dns-query
+    # # GitHub 
+    # '+.github.com': https://dns.google/dns-query
+    # '+.githubusercontent.com': https://dns.google/dns-query
+    # '+.githubassets.com': https://dns.google/dns-query
+    # # Telegram
+    # '+.telegram.org': https://cloudflare-dns.com/dns-query
+    # '+.t.me': https://cloudflare-dns.com/dns-query
+
     # 国内域名使用国内 DNS
     # 'geosite:cn':
     #   - 223.5.5.5
@@ -719,7 +741,7 @@ rule-providers:
     # path: ./rules/adblock.yaml
     format: text
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
-    path: ./rules/adblock-reject.yaml
+    path: ./rules/adblock-reject.txt
     interval: 86400
 
   # AI服务
@@ -957,9 +979,9 @@ rule-providers:
   final-proxy:
     type: http
     behavior: domain
-    format: yaml
+    format: text
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
-    path: ./rules/final-proxy.list
+    path: ./rules/final-proxy.txt
     interval: 86400
 
 
@@ -985,16 +1007,17 @@ rules:
   #    放开前请先取消上方 script.shortcuts 中 webrtc-stun-strict 的注释。
   # - SCRIPT,webrtc-stun-strict,REJECT,no-track
 
+  # 自定义规则 —— 本地/局域网、广告拦截
+  - RULE-SET, direct-lan, DIRECT, no-resolve # ipcidr 类规则集支持 no-resolve 参数
+  - RULE-SET, direct-local, DIRECT
+  - RULE-SET, adblock, REJECT
+
   # 自定义规则
   - DOMAIN-KEYWORD, apple, 苹果服务
   - DOMAIN-KEYWORD, google, 谷歌服务
   - DOMAIN-KEYWORD, youtube, YouTube
 
-  # 远程分流规则集
-  - RULE-SET, direct-lan, DIRECT, no-resolve # ipcidr 类规则集支持 no-resolve 参数
-  - RULE-SET, direct-local, DIRECT
-  - RULE-SET, adblock, REJECT
-
+  # 远程分流规则集 —— 应用服务
   - RULE-SET, openai, AI服务
   - RULE-SET, anthropic, AI服务
   - RULE-SET, gemini, AI服务
@@ -1005,19 +1028,19 @@ rules:
   - RULE-SET, facebook, Facebook
   - RULE-SET, tiktok, TikTok
 
-  - RULE-SET, google, Google
+  - RULE-SET, google, 谷歌服务
 
   - RULE-SET, youtube, YouTube
 
   - RULE-SET, cryptocurrency, 数字加密
 
-  - RULE-SET, apple, Apple
-  - RULE-SET, microsoft, Microsoft
-  - RULE-SET, github, Github
+  - RULE-SET, apple, 苹果服务
+  - RULE-SET, microsoft, 微软服务
+  - RULE-SET, github, 兜底线路
 
   - RULE-SET, paypal, PayPal
 
-  - RULE-SET, talkatone, Talkatone
+  - RULE-SET, talkatone, 兜底线路
 
   - RULE-SET, pornhub, 其它流媒体
   - RULE-SET, categoryporn, 其它流媒体
@@ -1026,7 +1049,7 @@ rules:
   # - RULE-SET, tencent, 调控线路
   # - RULE-SET, baidu, 调控线路
   # - RULE-SET, xiaohongshu, 调控线路
-  - RULE-SET, bilibili, 调控线路
+  - RULE-SET, bilibili, 哔哩哔哩
 
   # 直连/代理 兜底
   - RULE-SET, final-direct-ip, DIRECT, no-resolve # ipcidr 类规则集支持 no-resolve 参数

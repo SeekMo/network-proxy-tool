@@ -278,9 +278,8 @@ dns:
     - 'clients4.google.com'
 
     # > NTP 时间同步
-    - 'pool.ntp.org'
-    - '*.pool.ntp.org'
-    - '*.ntp.org.cn'
+    - '+.pool.ntp.org'
+    - '+.ntp.org.cn'
     - 'ntp.*.com'
     - 'ntp?.*.com'
     - 'time.*.com'
@@ -298,6 +297,15 @@ dns:
     - '*.routerlogin.com'
     - '*.mymeraki.com'
     - '*.gl-inet.com'
+    # 国内常见路由器管理域名（原列表缺失，实际使用率远高于上面几个海外品牌）
+    - '*.tplinkwifi.net'
+    - '*.tendawifi.com'
+    - '*.melogin.cn'
+    - '*.falogin.cn'
+
+    # > 本地 DNS 拦截工具
+    - 'injections.adguard.org'
+    - 'local.adguard.org'
 
     # > Apple 服务
     - 'mesu.apple.com'
@@ -312,16 +320,24 @@ dns:
     # > Google 服务
     - 'lens.l.google.com'
 
-    # GitHub SSH connection
-    - '+.github.com'
-    - '+.githubusercontent.com'
-    - '+.githubapp.com'
-    - '+.githubassets.com'
-    - 'github.com'
-    - '*.github.com'
+    # > GitHub
+    # 存疑分组，建议评估后再决定去留，详见下方说明：
+    #    1) 冗余已清理：+.github.com 按本文件第 125 行的语义，已等同于
+    #       github.com 与 *.github.com，原先的三条重复项已删除。
+    #    2) 更重要的问题：GitHub 是需要走代理的域名，而放进 fake-ip-filter
+    #       意味着客户端直接拿到真实 IP 去连接，Stash 此时只看得到目标 IP，
+    #       DOMAIN 类规则可能失配，最终落到 GEOIP/兜底规则上，分流反而变差。
+    #       （若已开启域名嗅探 sniffer，可从 TLS SNI 恢复域名，影响会小一些。）
+    #    3) 原始用意是修 "git over SSH" 问题，但 SSH 经代理栈转发时 fake-ip
+    #       本就工作正常。若你没有实际遇到 git 拉取失败，建议整组注释掉。
+    # - '+.github.com'
+    # - '+.githubusercontent.com'
+    # - '+.githubapp.com'
+    # - '+.githubassets.com'
 
     # > 运营商一键登录 / 认证
-    - '*.cmpassport.com'
+    # 统一改用 +.：这类鉴权接口常出现两级以上子域，*. 只匹配一级会漏。
+    - '+.cmpassport.com'
     - 'id6.me'
     - 'open.e.189.cn'
     - 'opencloud.wostore.cn'
@@ -330,53 +346,51 @@ dns:
     - 'hmrz.wo.cn'
     - 'nishub1.10010.com'
     - 'enrichgw.10010.com'
-    - '*.wosms.cn'
-    - '*.jegotrip.com.cn'
-    - '*.icitymobile.mobi'
-    - '*.10099.com.cn'
-    - '*.microdone.cn'
+    - '+.wosms.cn'
+    - '+.jegotrip.com.cn'
+    - '+.icitymobile.mobi'
+    - '+.10099.com.cn'
+    - '+.microdone.cn'
 
     # > 银行 / 支付
-    - '*.pingan.com.cn'
-    - '*.cmbchina.com'
+    - '+.pingan.com.cn'
+    - '+.cmbchina.com'
 
-    # > 腾讯
-    - 'localhost.ptlogin2.qq.com'
-    - 'localhost.sec.qq.com'
+    # > 腾讯本地回环
+    - 'localhost.*.qq.com'
+    - 'localhost.*.weixin.qq.com'
 
     # > 流媒体
-    - '*.mcdn.bilivideo.cn'
+    # B 站 PCDN 节点，本质是 P2P，会把自己解析到的 IP 写进对端交换的数据里
+    - '+.mcdn.bilivideo.cn'
 
     # > 音乐服务（解锁）
-    - 'music.163.com'
-    - '*.music.163.com'
-    - '*.126.net'
+    - '+.music.163.com'
+    - '+.126.net' # 网易云 CDN 实为 m701.music.126.net 这类两级子域，必须用 +.
     - 'musicapi.taihe.com'
     - 'music.taihe.com'
     - 'songsearch.kugou.com'
     - 'trackercdn.kugou.com'
-    - '*.kuwo.cn'
+    - '+.kuwo.cn'
+    - '+.joox.com'
     - 'api-jooxtt.sanook.com'
-    - 'api.joox.com'
-    - 'joox.com'
-    - 'y.qq.com'
-    - '*.y.qq.com'
+    - '+.y.qq.com'
     - 'streamoc.music.tc.qq.com'
     - 'mobileoc.music.tc.qq.com'
     - 'isure.stream.qqmusic.qq.com'
     - 'dl.stream.qqmusic.qq.com'
     - 'aqqmusic.tc.qq.com'
     - 'amobile.music.tc.qq.com'
-    - '*.xiami.com'
-    - 'music.migu.cn'
-    - '*.music.migu.cn'
+    - '+.music.migu.cn'
 
     # > 游戏平台
     - '+.srv.nintendo.net'
     - 'xbox.*.microsoft.com'
-    - 'xnotify.xboxmojie.app'
+    - '+.xboxlive.com'
     - '+.ipv6.microsoft.com'
     - '+.battlenet.com.cn'
+    - '+.logon.battle.net'
+    - '+.blzstatic.cn'
     - '+.wotgame.cn'
     - '+.wggames.cn'
     - '+.wowsgame.cn'
@@ -395,6 +409,7 @@ dns:
 
     # > 其它
     - 'proxy.golang.org'
+    - 'app.yinxiang.com'
 
 
 # =====================================

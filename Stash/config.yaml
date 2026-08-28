@@ -487,14 +487,10 @@ proxies:
 proxy-providers:
   # Stash 启动时会优先读取 path 对应的本地缓存；如果本地缓存不存在或无法解析，后续会从 url 下载远程代理集并写入该路径。远程更新成功后，也会覆盖该本地缓存
   sub-free1:
-    path: ./subfree/subFree1.yaml
+    # path: ./subfree/subFree1.yaml
     url: https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml
     interval: 86400
     filter: '🟢|🟡|🟠'
-    health-check:
-      enable: true
-      interval: 3600
-      url: http://www.gstatic.com/generate_204
 
 
 # =====================================

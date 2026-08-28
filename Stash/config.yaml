@@ -487,11 +487,14 @@ proxies:
 proxy-providers:
   # Stash 启动时会优先读取 path 对应的本地缓存；如果本地缓存不存在或无法解析，后续会从 url 下载远程代理集并写入该路径。远程更新成功后，也会覆盖该本地缓存
   sub-free1:
-    # path: ./subfree/subFree1.yaml
+    path: ./subfree/subFree1.yaml
     url: https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml
     interval: 86400
     filter: '🟢|🟡|🟠'
-
+    benchmark-disabled: false # 设置为 `true` 时完全禁用延迟测试
+    benchmark-url: http://www.apple.com/generate_204 # 建议只使用 HTTP 协议
+    benchmark-timeout: 5 # 延迟测试超时时间，单位：秒
+    
 
 # =====================================
 # 分流策略组
@@ -520,7 +523,7 @@ proxy-groups:
   - name: 手动选择
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
     type: select
-    proxies: [DIRECT, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [DIRECT, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # > 服务策略
   # AI服务
@@ -533,79 +536,79 @@ proxy-groups:
   - name: 谷歌服务
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: 苹果服务
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png
     type: select
-    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: 微软服务
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png
     type: select
-    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 社交
   - name: Telegram
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: Twitter
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: Facebook
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Facebook.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: TikTok
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png
     type: select
-    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 影音流媒体
   - name: 哔哩哔哩
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
     type: select
-    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点]
+    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, 其它节点]
 
   - name: YouTube
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: 其它流媒体
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 电商
   - name: PayPal
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Paypal.png
     type: select
-    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # CryptoCurrency
   - name: 数字加密
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cryptocurrency.png
     type: select
-    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 台湾节点, 新加坡节点, 日本节点, 韩国节点]
+    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 其它节点]
 
   # > 其它策略
   # 根据应用情况，需要可调控的线路（如：DouYin、ZFB、TX的一些操作，可能需指定特定线路）
   - name: 调控线路
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
     type: select
-    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 兜底策略
   - name: 兜底线路
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
     type: select
-    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点]
+    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # > 自定义指定代理
   - name: 静态住宅或ISP
@@ -632,6 +635,24 @@ proxy-groups:
     lazy: true
     filter: 'Pri_V_02|P_VPS_02'
 
+  - name: 优选订阅
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
+    type: select
+    # use: 
+    #   - 
+    interval: 3600
+    lazy: true
+    filter: ''
+
+  - name: 公益订阅1
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Piao.png
+    type: select
+    # use: 
+    #   - sub-free1
+    interval: 3600
+    lazy: true
+    filter: '🟢|🟡|🟠'
+
   # > 定时测速策略组
   - name: 香港节点
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
@@ -639,7 +660,7 @@ proxy-groups:
     include-all: true
     interval: 3600
     lazy: true
-    filter: '(?=.*(🇭🇰|🇲🇴|HK|(?i)Hong|港|澳))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
+    filter: '(?=.*(🇭🇰|🇲🇴|HK|(?i)Hong|港|澳门|澳門))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
   - name: 台湾节点
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
@@ -663,7 +684,7 @@ proxy-groups:
     include-all: true
     interval: 3600
     lazy: true
-    filter: '(?=.*(🇯🇵|JP|(?i)Japan|(?i)Tokyo|日本|东京|大阪))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
+    filter: '(?=.*(🇯🇵|JP|(?i)Japan|Tokyo|日本|东京|大阪))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
   - name: 韩国节点
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/KR.png
@@ -688,6 +709,15 @@ proxy-groups:
     interval: 3600
     lazy: true
     filter: '(?=.*(🇨🇦|CA|(?i)Canada|加拿大))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
+
+  # 排除上面各策略组已归类的节点，剩余节点全部落入此组
+  - name: 其它节点
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/UN.png
+    type: select
+    include-all: true
+    interval: 3600
+    lazy: true
+    filter: '^((?!(⚪|🔴|静态|住宅|(?i:ISP)|Pri_V|P_VPS|🇭🇰|🇲🇴|HK|港|澳门|🇹🇼|TW|台湾|🇸🇬|SG|新加坡|🇯🇵|JP|日本|🇰🇷|KR|韩|🇺🇸|US|美|🇨🇦|CA|加拿大)).)*$'
 
 
 # =====================================

@@ -510,7 +510,7 @@ proxy-providers:
   # sub-free1:
   #   # path: ./subfree/subFree1.yaml
   #   url: https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml
-  #   interval: 86400
+  #   interval: 10800
   #   filter: '🟢|🟡|🟠'
   #   benchmark-disabled: false # 设置为 `true` 时完全禁用延迟测试
   #   benchmark-url: http://www.apple.com/generate_204 # 建议只使用 HTTP 协议
@@ -636,7 +636,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
     type: select
     include-all: true
-    interval: 3600
+    interval: -1
     lazy: true
     filter: '🏠|静态|住宅|(?i)ISP'
 
@@ -644,7 +644,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
     type: select
     include-all: true
-    interval: 3600
+    interval: -1
     lazy: true
     filter: 'Pri_V_01|P_VPS_01'
 
@@ -652,7 +652,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
     type: select
     include-all: true
-    interval: 3600
+    interval: -1
     lazy: true
     filter: 'Pri_V_02|P_VPS_02'
 
@@ -745,7 +745,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/UN.png
     type: select
     include-all: true
-    interval: 3600
+    interval: -1
     lazy: true
     filter: '^((?!(⚪|🔴|静态|住宅|(?i:ISP)|Pri_V|P_VPS|优选|电信|联通|电信|🇭🇰|🇲🇴|HK|港|澳门|🇹🇼|TW|台湾|🇸🇬|SG|新加坡|🇯🇵|JP|日本|🇰🇷|KR|韩|🇺🇸|US|美|🇨🇦|CA|加拿大)).)*$'
 

@@ -196,14 +196,14 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 #  - url: 测速的url，loon会向该url发起header请求。若未配置，则使用 [General] 中的 proxy-test-url 项进行测速
 #  - interval: 测速间隔时间，单位秒
 #  - tolerance: 容差，如果当前测速后的最优节点和之前最优节点的测速相差小于tolerance，将不会进行节点切换，单位毫秒
-香港节点 = url-test, HK_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-台湾节点 = url-test, TW_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-新加坡节点 = url-test, SG_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
-日本节点 = url-test, JP_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-韩国节点 = url-test, KR_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-美国节点 = url-test, US_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-加拿大节点 = url-test, CA_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
-其它节点 = select, OTHER_Filter, interval = 86400, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Nations.png
+香港节点 = url-test, HK_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+台湾节点 = url-test, TW_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+新加坡节点 = url-test, SG_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+日本节点 = url-test, JP_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+韩国节点 = url-test, KR_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+美国节点 = url-test, US_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+加拿大节点 = url-test, CA_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
+其它节点 = select, OTHER_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Nations.png
 
 
 # =====================================

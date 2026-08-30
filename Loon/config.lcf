@@ -214,7 +214,7 @@ RES_Filter = NameRegex, FilterKey = "🏠|静态|住宅|(?i)ISP"
 VPS01_Filter = NameRegex, FilterKey = "Pri_V_01|P_VPS_01"
 VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
 VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
-SUB_Filter_1 = NameRegex, FilterKey = "(?=.*(优选|电信|联通|电信))^((?!(CF官方)).)*$"
+SUB_Filter_1 = NameRegex, FilterKey = "(?=.*(优选|电信|联通|移动))^((?!(CF官方)).)*$"
 SUB_Filter_2 = NameRegex, FilterKey = "CF官方"
 SUB_Free_1 = NameRegex, FilterKey = "🟢|🟡|🟠"
 HK_Filter = NameRegex, FilterKey = "(?=.*(🇭🇰|🇲🇴|HK|(?i)Hong|港|澳门|澳門))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
@@ -225,7 +225,7 @@ KR_Filter = NameRegex, FilterKey = "(?=.*(🇰🇷|KR|KOR|(?i)Korea|韩国|韩|�
 US_Filter = NameRegex, FilterKey = "(?=.*(🇺🇸|US|(?i)America|美国|美))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 CA_Filter = NameRegex, FilterKey = "(?=.*(🇨🇦|CA|(?i)Canada|加拿大))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$"
 # 排除上面各策略组已归类的节点，剩余节点全部落入此组
-OTHER_Filter = NameRegex, FilterKey = "^((?!(⚪|🔴|静态|住宅|(?i:ISP)|Pri_V|P_VPS|优选|电信|联通|电信|🇭🇰|🇲🇴|HK|港|澳门|🇹🇼|TW|台湾|🇸🇬|SG|新加坡|🇯🇵|JP|日本|🇰🇷|KR|韩|🇺🇸|US|美|🇨🇦|CA|加拿大)).)*$"
+OTHER_Filter = NameRegex, FilterKey = "^((?!(⚪|🔴|静态|住宅|(?i:ISP)|Pri_V|P_VPS|优选|电信|联通|移动|🇭🇰|🇲🇴|HK|港|澳门|🇹🇼|TW|台湾|🇸🇬|SG|新加坡|🇯🇵|JP|日本|🇰🇷|KR|韩|🇺🇸|US|美|🇨🇦|CA|加拿大)).)*$"
 
 
 # =====================================

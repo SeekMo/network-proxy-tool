@@ -23,6 +23,8 @@
 # https://raw.githubusercontent.com/jnlaoshu/MySelf/master/Stash/Script/Google.stoverride
 
 # ------ 功能增强 ------ #
+# - Sub-Store 订阅管理(Stash已内置)
+# https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Stash.stoverride
 # - Apple WLOC 定位修改
 # https://raw.githubusercontent.com/Yu9191/wloc/refs/heads/main/modules/wloc.stoverride
 # - 京东历史价格

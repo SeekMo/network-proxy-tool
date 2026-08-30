@@ -430,7 +430,8 @@ https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GithubAutoRaw/Git
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GitRawAutoCDN/GitRawAutoCDN.plugin, tag = GitHub源文件自动CDN, enabled = false
 
 # ------ 功能增强 ------ #
-https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = ture
+https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon.plugin, tag = Sub-Store, enabled = fasle
+https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = fasle
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/AppleWeatherEnhancer.plugin, tag = Apple天气增强, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag = 京东比价, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JD_Price/JD_Price.plugin, tag = 京东比价, enabled = false

@@ -16,16 +16,19 @@
 [General]
 # 让指定 IP 段或域名绕过 Loon 的 TUN，由系统直接处理
 bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,239.255.255.250/32,255.255.255.255/32
+
 # 跳过某个域名或者 IP 段，这些目标主机将不会由 Loon Proxy 处理
 skip-proxy = localhost, *.local, captive.apple.com, e.crashlytics.com, www.baidu.com, passenger.t3go.cn, yunbusiness.ccb.com, wxh.wo.cn, gate.lagou.com, www.abchina.com.cn, login-service.mobile-bank.psbc.com, mobile-bank.psbc.com, 10.0.0.0/8, 127.0.0.1/32, 172.16.0.0/12, 192.168.0.0/16, 192.168.122.1/32, 193.168.0.1/32, ::1/128, fe80::/10
 
-# > DNS 服务器，多个 DNS 服务器使用英文逗号分隔
 # 普通 UDP DNS，system 表示系统 DNS。配置了加密 DNS 时本项不参与查询，仅在加密查询失败时作为回落（App「DNS 服务器」页可关闭回落）
 dns-server = 223.5.5.5, 119.29.29.29
+
 # DNS over HTTPS，加密 DNS 会并发查询下列所有服务器、采用最快结果
 doh-server = https://doh.pub/dns-query, https://dns.alidns.com/dns-query
+
 # DNS over QUIC，标准端口为 853，建议显式写明，使用 IP 形式，无需引导解析（相当于 Shadowrocket 中的 fallback-dns-server = quic://223.5.5.5）
 doq-server = quic://223.5.5.5:853
+
 # DNS over HTTP/3，与 DoQ 同走 QUIC，作用重复
 # doh3-server = h3://dns.alidns.com/dns-query
 
@@ -51,9 +54,11 @@ wifi-access-socks5-port = 8802
 #proxy-test-url = http://www.google.com/generate_204
 #proxy-test-url = http://cp.cloudflare.com/generate_204
 proxy-test-url = http://www.gstatic.com/generate_204
+
 # 网络可用性检测地址，建议使用可直连访问的 URL
 #internet-test-url = http://connectivitycheck.platform.hicloud.com/generate_204
 internet-test-url = http://www.apple.com/generate_204
+
 # 节点测速超时时间，单位为秒
 test-timeout = 3
 
@@ -71,14 +76,21 @@ test-timeout = 3
 interface-mode = auto
 
 # DNS 数据包将被转发到上游 DNS 服务器。解决一些ip请求无法匹配规则的问题，real-ip指定的域名将不返回fake ip响应，直接将dns请求发往目标dns服务器
-# 小米路由器仅列管理域名 miwifi.com、www.miwifi.com，不用 *.miwifi.com：否则 stun.miwifi.com 会拿到真实 IP，按域名分流可能失效、STUN 直连暴露真实 IP。
 real-ip = *.lan, *.direct, *.localdomain, *.example, *.invalid, *.localhost, *.test, *.local, *.home.arpa, *.corp, *.internal, stun.playstation.net, *.stun.playstation.net, cable.auth.com, network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, msftconnecttest.com, *.msftconnecttest.com, msftncsi.com, *.msftncsi.com, captive.apple.com, pool.ntp.org, *.pool.ntp.org, ntp.org.cn, *.ntp.org.cn, ntp.*.com, ntp?.*.com, time.*.com, time?.*.com, time.*.gov, time.*.edu.cn, heartbeat.belkin.com, *.linksys.com, *.linksyssmartwifi.com, *.router.asus.com, *.hiwifi.com, miwifi.com, www.miwifi.com, *.routerlogin.com, *.mymeraki.com, *.gl-inet.com, *.tplinkwifi.net, *.tendawifi.com, *.melogin.cn, *.falogin.cn, injections.adguard.org, local.adguard.org, mesu.apple.com, swscan.apple.com, swquery.apple.com, swdownload.apple.com, swcdn.apple.com, swdist.apple.com, *.apple.com.edgesuite.net, push-apple.com.akadns.net, cmpassport.com, *.cmpassport.com, id6.me, open.e.189.cn, opencloud.wostore.cn, id.mail.wo.cn, mdn.open.wo.cn, hmrz.wo.cn, nishub1.10010.com, enrichgw.10010.com, wosms.cn, *.wosms.cn, jegotrip.com.cn, *.jegotrip.com.cn, icitymobile.mobi, *.icitymobile.mobi, 10099.com.cn, *.10099.com.cn, microdone.cn, *.microdone.cn, pingan.com.cn, *.pingan.com.cn, cmbchina.com, *.cmbchina.com, localhost.*.qq.com, localhost.*.weixin.qq.com, mcdn.bilivideo.cn, *.mcdn.bilivideo.cn, music.163.com, *.music.163.com, 126.net, *.126.net, *.music.126.net, musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, kuwo.cn, *.kuwo.cn, joox.com, *.joox.com, api-jooxtt.sanook.com, y.qq.com, *.y.qq.com, streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, music.migu.cn, *.music.migu.cn, srv.nintendo.net, *.srv.nintendo.net, *.n.n.srv.nintendo.net, xbox.*.microsoft.com, xboxlive.com, *.xboxlive.com, ipv6.microsoft.com, *.ipv6.microsoft.com, battlenet.com.cn, *.battlenet.com.cn, *.logon.battlenet.com.cn, logon.battle.net, *.logon.battle.net, blzstatic.cn, *.blzstatic.cn, wotgame.cn, *.wotgame.cn, wggames.cn, *.wggames.cn, wowsgame.cn, *.wowsgame.cn, wargaming.net, *.wargaming.net, pvp.net, *.pvp.net, *.square-enix.com, *.finalfantasyxiv.com, *.ffxiv.com, *.ff14.sdo.com, ff.dorado.sdo.com, PDC._msDCS.*.*, DC._msDCS.*.*, GC._msDCS.*.*, app.yinxiang.com
 
-# 禁止指定端口使用 UDP
+# 禁止指定端口使用 UDP：443 即 QUIC（HTTP/3），屏蔽后回退 TCP，便于按域名分流，部分通话中继也用 UDP 443
 disable-udp-ports = 443,80
-# 禁止 STUN UDP 流量，可用于减少 WebRTC IP 泄漏
+
+# 「默认·防泄漏模式」丢弃 STUN 报文（不论直连或代理）。Loon 没有 stun-response-ip，这是拦住直连 STUN 最直接的手段
+#  代价：ICE 连通检测与 UDP TURN 也使用 STUN 报文，Google Meet、网页版 Discord、Telegram/WhatsApp 通话的 UDP 通道会失败（部分可退回 TCP 中继，质量下降）
 disable-stun = true
-# 节点不支持 UDP 或未启用 UDP 转发时使用的策略，支持 DIRECT 和 REJECT
+
+# 「通话模式」需要通话时：注释上面 disable-udp-ports、disable-stun 两行，放开下面两行，并放开 [Rule] 中「通话模式配套」规则，通话结束后改回
+#  此模式下 STUN 按规则走代理，srflx 显示节点 IP，前提是节点支持 UDP 转发，否则受 udp-fallback-mode = REJECT 影响，通话直接失败
+# disable-udp-ports = 80
+# disable-stun = false
+
+# 节点不支持 UDP 或未启用 UDP 转发时使用的策略，支持 DIRECT 和 REJECT。REJECT 可避免 UDP（含 STUN、通话）回退直连暴露真实 IP
 udp-fallback-mode = REJECT
 
 # 自定义 GeoIP 数据库
@@ -102,6 +114,7 @@ ipasn-url = https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite
 #  - DNS: 在 DNS 阶段使用 Loopback IP、No Answer 或 NXDomain 拒绝
 #  - Request: 在请求转发阶段拒绝
 domain-reject-mode = DNS
+
 # 设置 DNS 阶段的拒绝方式
 #  - LOOPBACKIP: 返回回环 IP
 #  - NOANSWER: 返回空 DNS 响应
@@ -331,39 +344,92 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global
 # 相同规则下，本地规则优先生效
 # =====================================
 [Rule]
-# Type: DOMAIN-SUFFIX,DOMAIN,DOMAIN-KEYWORD,USER-AGENT,URL-REGEX,IP-CIDR,IP-CIDR6,IP-ASN
-# Strategy: DIRECT,PROXY,REJECT
-# Options:no-resolve(only for cidr)
-# IP-CIDR, 10.0.0.0/8, DIRECT
-# IP-CIDR, 127.0.0.0/8, DIRECT
-# IP-CIDR, 172.16.0.0/12, DIRECT
-# IP-CIDR, 192.168.0.0/16, DIRECT
-# IP-CIDR, 224.0.0.0/24, DIRECT
-# IP-CIDR, 182.254.116.0/24, DIRECT
+# ------------------------------------------------------------------
+# > 分流规则说明
+# ------------------------------------------------------------------
+# 【规则类型】
+#  域名类：DOMAIN（完整域名）、DOMAIN-SUFFIX（域名及其子域名）、DOMAIN-KEYWORD（关键词）
+#  IP 类 ：IP-CIDR、IP-CIDR6、GEOIP（IP 归属地）、IP-ASN（IP 所属 ASN），均可加 no-resolve
+#  其 他 ：USER-AGENT、URL-REGEX、DEST-PORT / SRC-PORT（端口）、PROTOCOL（HTTP/HTTPS/TCP/QUIC/STUN/UDP）、
+#          AND / OR / NOT（逻辑）、FINAL（兜底，必须放在最后）
+#
+# 【规则策略】DIRECT（直连）、REJECT / REJECT-IMG / REJECT-DICT / REJECT-ARRAY / REJECT-DROP（拒绝）、策略组或节点名称。
+#   Loon 没有内置 PROXY 策略，走代理时须写策略组名称（如「兜底线路」）。
+#
+# 【匹配优先级】（Loon 3.0.3+）
+#   1. 来源：本地 [Rule] > 插件 [Plugin] > 订阅 [Remote Rule]；同一来源内按书写顺序从上到下。
+#   2. 目标为域名时，先匹配域名类规则；均未命中，才在本地解析 DNS 并匹配 IP 类规则。
+#      故本地 DOMAIN-KEYWORD,apple 会优先远程规则集中的同域名规则（与 QuantumultX 按类型分档不同）。
+#   3. 所有规则均未命中时，使用 FINAL。
+#
+# 【IP 类规则与 DNS 泄漏】
+#   不带 no-resolve 的 IP 类规则，会让未命中域名规则的域名先用 doh-server（国内 DoH）在本地解析，泄露访问的境外域名。
+#   已核实：所有已启用的远程规则集与插件中的 IP 规则均带 no-resolve，本地 GEOIP 也已加 no-resolve。
+# ------------------------------------------------------------------
 
-# 安全防护检测
-DOMAIN-SUFFIX, browserleaks.com, 兜底线路
-DOMAIN-SUFFIX, browserleaks.net, 兜底线路
-DOMAIN-SUFFIX, browserleaks.org, 兜底线路
-DOMAIN-SUFFIX, ipleak.net, 兜底线路
-DOMAIN-SUFFIX, dnsleaktest.com, 兜底线路
-DOMAIN-SUFFIX, whoer.net, 兜底线路
-DOMAIN-SUFFIX, test-ipv6.com, 兜底线路
-DOMAIN-SUFFIX, ip.sb, 兜底线路
-DOMAIN-SUFFIX, whatismyip.com, 兜底线路
-DOMAIN-SUFFIX, myip.la, 兜底线路
+# > local
+# IP-CIDR,10.0.0.0/8,DIRECT
+# IP-CIDR,127.0.0.0/8,DIRECT
+# IP-CIDR,172.16.0.0/12,DIRECT
+# IP-CIDR,192.168.0.0/16,DIRECT
+# IP-CIDR,224.0.0.0/24,DIRECT
+# IP-CIDR,182.254.116.0/24,DIRECT
 
-# 自定义分流规则
-DOMAIN-KEYWORD, apple, 苹果服务
-DOMAIN-KEYWORD, google, 谷歌服务
-DOMAIN-KEYWORD, youtube, YouTube
+# ------------------------------------------------------------------
+# > 通话模式配套（默认关闭）
+# 【启用】按 [General]「通话模式」说明切换 disable-udp-ports、disable-stun，再放开本段规则，通话结束后改回。
+# 【作用】STUN 一律走代理，srflx 显示节点 IP；不丢弃 STUN 报文，通话可正常建立。
+# 【前提】节点须支持 UDP 转发，否则 udp-fallback-mode = REJECT 会使通话失败。
+# 【覆盖】PROTOCOL,STUN 按协议匹配，不限域名、IP、端口，可覆盖以 IP 形式指定的 STUN。
+#        但目标为域名时 Loon 先匹配域名规则，故另加常见 STUN 的 DOMAIN 规则（本地优先），压过远程直连规则
+#        （如 bilibili.com、miwifi.com），DOMAIN-KEYWORD 兜底未被收录的 stun 域名。
+#        放开 UDP 443 后，由 PROTOCOL,QUIC,REJECT 继续屏蔽 QUIC。
+# 【局限】通话媒体流（非 STUN）仍按 IP 规则分流，对方 IP 在国内时命中 GEOIP 走直连。
+# 【自测】Trickle ICE：srflx 应为节点 IP（与 ip.sb 一致）。
+# ------------------------------------------------------------------
+# PROTOCOL,STUN,兜底线路
+# DOMAIN,stun.l.google.com,兜底线路
+# DOMAIN,stun1.l.google.com,兜底线路
+# DOMAIN,stun2.l.google.com,兜底线路
+# DOMAIN,stun3.l.google.com,兜底线路
+# DOMAIN,stun4.l.google.com,兜底线路
+# DOMAIN,stun.chat.bilibili.com,兜底线路
+# DOMAIN,stun.miwifi.com,兜底线路
+# DOMAIN,stun.cloudflare.com,兜底线路
+# DOMAIN-KEYWORD,stun,兜底线路
+# PROTOCOL,QUIC,REJECT
+# 
+# > 各 App 自身的防护（与本配置无关，建议常开）：
+#  - Telegram：设置 → 隐私与安全 → 通话 → 点对点 → 「永不」（通话经官方服务器中转，对方看不到你的 IP）
+#  - WhatsApp：设置 → 隐私 → 高级 → 「在通话中保护 IP 地址」
+# Telegram 的中转服务器 IP 已在远程 Telegram.list 中，走「Telegram」策略组，无需另加规则。
+# ------------------------------------------------------------------
 
-# 根据 GEOIP 数据库判断IP是否属于CN地区，若匹配到，将走直连
-GEOIP, CN, DIRECT, no-resolve
+# > 安全防护检测
+DOMAIN-SUFFIX,browserleaks.com,兜底线路
+DOMAIN-SUFFIX,browserleaks.net,兜底线路
+DOMAIN-SUFFIX,browserleaks.org,兜底线路
+DOMAIN-SUFFIX,ipleak.net,兜底线路
+DOMAIN-SUFFIX,dnsleaktest.com,兜底线路
+DOMAIN-SUFFIX,whoer.net,兜底线路
+DOMAIN-SUFFIX,test-ipv6.com,兜底线路
+DOMAIN-SUFFIX,ip.sb,兜底线路
+DOMAIN-SUFFIX,whatismyip.com,兜底线路
+DOMAIN-SUFFIX,myip.la,兜底线路
+
+# > 自定义分流规则
+DOMAIN-KEYWORD,apple,苹果服务
+DOMAIN-KEYWORD,google,谷歌服务
+DOMAIN-KEYWORD,youtube,YouTube
+
+# > 防 DNS 泄漏
+# 根据 GEOIP 数据库判断 IP 是否属于 CN 地区，若匹配到，将走直连。
+# 加 no-resolve：仅对纯 IP 请求生效，未命中域名规则的域名不再在本地解析，直接落到 FINAL。
+# 副作用：未被规则集收录的国内小站会走「兜底线路」，如有必要，可以单独为其写 DOMAIN-SUFFIX 的自定义规则。
+GEOIP,CN,DIRECT,no-resolve
 
 # 当以上所有 本地/远程 规则都未匹配到时，将使用 FINAL 规则的策略
-#FINAL, PROXY
-FINAL, 兜底线路
+FINAL,兜底线路
 
 
 # =====================================

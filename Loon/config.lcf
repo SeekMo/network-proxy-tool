@@ -181,7 +181,7 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 调控线路 = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 
 # 兜底策略
-兜底线路 = select, DIRECT, PROXY, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
+兜底线路 = select, PROXY, DIRECT, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
 
 # > 自定义指定代理
 静态住宅或ISP = select,RES_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png

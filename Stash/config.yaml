@@ -338,7 +338,9 @@ dns:
     - '*.linksyssmartwifi.com'
     - '*.router.asus.com'
     - '*.hiwifi.com'
-    - '*.miwifi.com'
+    # 小米路由器仅列管理域名；不用 *.miwifi.com，以免 stun.miwifi.com 拿到真实 IP、按域名分流失效
+    - 'miwifi.com'
+    - 'www.miwifi.com'
     - '*.routerlogin.com'
     - '*.mymeraki.com'
     - '*.gl-inet.com'

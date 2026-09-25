@@ -4,32 +4,32 @@
 > 按顺序执行第 1～7 步，每一步都给出了操作方法、预期结果，以及不符合预期时的排查方向。
 > 规则如何匹配、何时触发本地 DNS 解析，见 [附录 分流规则匹配与 DNS 解析过程](#附录-分流规则匹配与-dns-解析过程)。
 
-|   #   | 测试项            | 验证目标                                                   |
-| :---: | ----------------- | ---------------------------------------------------------- |
-|   1   | 规则与重写        | 分流规则、兜底规则、HTTPDNS 拦截重写是否按预期工作         |
-|   2   | DNS 泄露          | 域名解析是否泄露给运营商或非预期的 DNS 服务商              |
-|   3   | WebRTC 泄露       | 网页能否通过 STUN 探测到真实 IP                            |
-|   4   | IPv6 泄露         | IPv6 流量是否绕过隧道直接出网                              |
-|   5   | 通话功能          | 默认模式（丢弃 STUN）对各类通话的影响                      |
-|   6   | 通话模式（可选）  | 切换到通话模式后，STUN 是否都走代理、不暴露真实 IP         |
-|   7   | 日常回归          | 分流是否正确，常用应用是否正常                             |
+|   #   | 测试项           | 验证目标                                           |
+| :---: | ---------------- | -------------------------------------------------- |
+|   1   | 规则与重写       | 分流规则、兜底规则、HTTPDNS 拦截重写是否按预期工作 |
+|   2   | DNS 泄露         | 域名解析是否泄露给运营商或非预期的 DNS 服务商      |
+|   3   | WebRTC 泄露      | 网页能否通过 STUN 探测到真实 IP                    |
+|   4   | IPv6 泄露        | IPv6 流量是否绕过隧道直接出网                      |
+|   5   | 通话功能         | 默认模式（丢弃 STUN）对各类通话的影响              |
+|   6   | 通话模式（可选） | 切换到通话模式后，STUN 是否都走代理、不暴露真实 IP |
+|   7   | 日常回归         | 分流是否正确，常用应用是否正常                     |
 
 ---
 
 ## 一、与 Shadowrocket 的关键差异
 
-| 项目                  | Shadowrocket                              | QuantumultX                                                                                  |
-| --------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 加密 DNS              | `dns-server` + `fallback-dns-server`      | `[dns]` 的 `doh-server`；**没有加密备用 DNS**                                                |
-| 明文 `server`         | —                                         | 设置了 `doh-server` 后，全局明文 `server` 与 system 均被忽略；绑定域名的 `server=/域名/IP` 仍走明文，已全部注释 |
-| 防止 IP 规则触发解析  | `GEOIP,CN,DIRECT,no-resolve`              | **不支持 `no-resolve`**，改用 `host-keyword, ., 兜底线路` 在域名阶段接住未收录域名           |
-| 规则优先级            | 从上到下                                  | 「分流匹配优化」开启时先按**类型**分档，同档内才看本地/远程，详见附录                       |
-| 不使用 Fake-IP 的域名 | `always-real-ip`                          | `dns_exclusion_list`（两者内容已同步）                                                       |
-| WebRTC / STUN         | `stun-response-ip` 返回假 IP              | **没有该功能**，用 `udp_drop_list = 443, STUN, QUIC` 直接丢弃 STUN 包                        |
-| 节点不支持 UDP 时     | `udp-policy-not-supported-behaviour = REJECT` | `fallback_udp_policy = reject`                                                           |
-| 硬编码 DNS            | `hijack-dns` 劫持                         | 无对应配置，官方未说明。推断发往 `8.8.8.8:53` 等的查询作为纯 IP 流量分流（境外 IP 走兜底线路） |
-| HTTPDNS 拦截          | 模块，含分流规则                          | 远程重写 `QX-HTTPDNS.Block.conf`，**只有 URL 重写**；其中 `http://` 部分无需 MITM            |
-| 策略组类型            | `select` / `url-test`                     | `static` / `url-latency-benchmark`                                                           |
+| 项目                  | Shadowrocket                                  | QuantumultX                                                                                                     |
+| --------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| 加密 DNS              | `dns-server` + `fallback-dns-server`          | `[dns]` 的 `doh-server`；**没有加密备用 DNS**                                                                   |
+| 明文 `server`         | —                                             | 设置了 `doh-server` 后，全局明文 `server` 与 system 均被忽略；绑定域名的 `server=/域名/IP` 仍走明文，已全部注释 |
+| 防止 IP 规则触发解析  | `GEOIP,CN,DIRECT,no-resolve`                  | **不支持 `no-resolve`**，改用 `host-keyword, ., 兜底线路` 在域名阶段接住未收录域名                              |
+| 规则优先级            | 从上到下                                      | 「分流匹配优化」开启时先按**类型**分档，同档内才看本地/远程，详见附录                                           |
+| 不使用 Fake-IP 的域名 | `always-real-ip`                              | `dns_exclusion_list`（两者内容已同步）                                                                          |
+| WebRTC / STUN         | `stun-response-ip` 返回假 IP                  | **没有该功能**，用 `udp_drop_list = 443, STUN, QUIC` 直接丢弃 STUN 包                                           |
+| 节点不支持 UDP 时     | `udp-policy-not-supported-behaviour = REJECT` | `fallback_udp_policy = reject`                                                                                  |
+| 硬编码 DNS            | `hijack-dns` 劫持                             | 无对应配置，官方未说明。推断发往 `8.8.8.8:53` 等的查询作为纯 IP 流量分流（境外 IP 走兜底线路）                  |
+| HTTPDNS 拦截          | 模块，含分流规则                              | 远程重写 `QX-HTTPDNS.Block.conf`，**只有 URL 重写**；其中 `http://` 部分无需 MITM                               |
+| 策略组类型            | `select` / `url-test`                         | `static` / `url-latency-benchmark`                                                                              |
 
 > 💡 **WebRTC 测试的预期结果与 Shadowrocket 不同。** QX 直接丢弃 STUN 包，Trickle ICE 里应表现为**没有 srflx 候选**，而不是显示某个假 IP。
 
@@ -43,7 +43,7 @@
 
 ### 2. 规则集会把检测站分到直连
 
-QX 版 `China.list` 收录了 `browserleaks.com`、`myip.la`、`whatismyip.com`。已在 `[filter_local]` 加入 8 条 `host-suffix` 规则指向「兜底线路」，与 China.list 同档、本地优先。**第 1 步需确认它们确实生效。**
+QX 版 `China.list` 收录了 `browserleaks.com`、`myip.la`、`whatismyip.com`。已在 `[filter_local]` 加入 8 条 `host-suffix` 规则指向「兜底线路」，与 China.list 同档、本地优先。2026-09-25 第 1 步已确认生效。
 
 ### 3. 没有加密备用 DNS
 
@@ -69,7 +69,7 @@ DoH 不可用时（如需网页登录的公共 Wi-Fi、DoH 被屏蔽的网络）
 - [ ] 在规则资源列表中确认各资源均已加载成功（显示规则条数），**尤其是「数字加密」**
 - [ ] 设置 › 其他设置 › **「分流匹配优化」为开启**
 - [ ] 首页运行模式为 **规则分流**，而不是全部代理或全部直连
-- [ ] 确认远程重写「HTTPDNS拦截器」为启用状态
+- [ ] **QX设置中「重写」总开关为开启**，且远程重写「HTTPDNS拦截器」为启用状态。总开关关闭时，所有重写（含 HTTPDNS 拦截、去广告）都不生效
 - [ ] 选好节点，确认能正常上网；「兜底线路」当前选择的是代理，而不是 direct
 - [ ] 记下真实 IP 备用：先关闭 QX，访问 `ip.sb` 记录 IP，再重新开启
 - [ ] 进入首页「网络活动」，清空已有记录，方便后续查看
@@ -86,26 +86,28 @@ DoH 不可用时（如需网页登录的公共 Wi-Fi、DoH 被屏蔽的网络）
 
 **预期结果**
 
-| 访问                                   | 预期命中规则                          | 预期策略      | 验证目的                                   |
-| -------------------------------------- | ------------------------------------- | ------------- | ------------------------------------------ |
-| `https://www.baidu.com`                | `HOST-SUFFIX, BAIDU.COM`              | DIRECT        | 远程 China.list 正常                       |
-| `https://www.taobao.com`               | `HOST-SUFFIX, TAOBAO.COM`             | DIRECT        | 同上                                       |
-| `https://x.com`                        | `HOST-SUFFIX, X.COM`                  | Twitter       | 远程分类规则集正常                         |
-| `https://telegram.org`                 | `HOST-SUFFIX, TELEGRAM.ORG`           | Telegram      | 同上                                       |
-| `https://www.tiktok.com`               | `HOST-SUFFIX, TIKTOK.COM`             | TikTok        | 同上                                       |
-| `https://browserleaks.com`             | `HOST-SUFFIX, BROWSERLEAKS.COM`       | **兜底线路**  | 本地检测站规则压过 China.list              |
-| `http://httpbin.org`                   | `HOST-KEYWORD, .`                     | 兜底线路      | 未收录域名被兜底规则接住，不做本地解析     |
-| `http://neverssl.com`                  | `HOST-KEYWORD, .`                     | 兜底线路      | 同上                                       |
-| `http://119.29.29.29/d?dn=www.qq.com`  | 被重写拒绝                            | reject        | HTTPDNS 拦截重写生效（明文 HTTP，无需 MITM）|
+| 访问                                    | 预期命中规则                    | 预期策略     | 验证目的                                     |
+| --------------------------------------- | ------------------------------- | ------------ | -------------------------------------------- |
+| `https://www.baidu.com`                 | `HOST-SUFFIX, BAIDU.COM`        | DIRECT       | 远程 China.list 正常                         |
+| `https://www.taobao.com`                | `HOST-SUFFIX, TAOBAO.COM`       | DIRECT       | 同上                                         |
+| `https://x.com`                         | `HOST-SUFFIX, X.COM`            | Twitter      | 远程分类规则集正常                           |
+| `https://telegram.org`                  | `HOST-SUFFIX, TELEGRAM.ORG`     | Telegram     | 同上                                         |
+| `https://www.tiktok.com`                | `HOST-SUFFIX, TIKTOK.COM`       | TikTok       | 同上                                         |
+| `https://browserleaks.com`              | `HOST-SUFFIX, BROWSERLEAKS.COM` | **兜底线路** | 本地检测站规则压过 China.list                |
+| `http://httpbin.org`                    | `HOST-KEYWORD, .`               | 兜底线路     | 未收录域名被兜底规则接住，不做本地解析       |
+| `http://neverssl.com`                   | `HOST-KEYWORD, .`               | 兜底线路     | 同上                                         |
+| `http://119.29.29.29/d?dn=www.qq.com` ⚠️ | 被重写拒绝                      | reject       | HTTPDNS 拦截重写生效（明文 HTTP，无需 MITM） |
 
 > 💡 `browserleaks.com` 若显示 DIRECT，说明命中的是 China.list 而非本地规则，第 2 步结果将无效。
+
+> ⚠️ 测试 `http://119.29.29.29/d?dn=www.qq.com` 前，须在 QX 设置**开启「重写」总开关**，否则重写不生效，页面会直接返回一串 IP，被误判为拦截失败。
 
 **不符合时**
 
 - **任何域名请求显示 `GEOIP, CN` 或 `IP-CIDR, …`**：域名走到了 IP 类规则，发生了本地解析。检查「分流匹配优化」是否开启、`host-keyword, ., 兜底线路` 是否仍在。
 - **所有域名都显示 `HOST-KEYWORD, .`**：「分流匹配优化」被关闭了，远程规则集全部失效。
 - **`browserleaks.com` 为 DIRECT**：把 `[filter_local]` 中 8 条检测站规则从 `host-suffix` 改为 `host`（第 ① 档）后重测。
-- **HTTPDNS 地址能返回 IP 列表**：检查「HTTPDNS拦截器」是否启用、资源是否下载成功。
+- **HTTPDNS 地址能返回 IP 列表**：先确认设置「重写」总开关已开启，再检查「HTTPDNS拦截器」是否启用、资源是否下载成功。
 
 <br>
 
@@ -119,11 +121,11 @@ DoH 不可用时（如需网页登录的公共 Wi-Fi、DoH 被屏蔽的网络）
 
 **预期结果**
 
-| 结果                                                  | 判定                     |
-| ----------------------------------------------------- | ------------------------ |
-| 仅节点那一侧的解析服务器（如 Cloudflare、Google 等）  | ✅ 通过                   |
-| 出现腾讯、阿里（doh.pub / AliDNS）                    | ❌ 发生了本地解析，需排查 |
-| 出现当前运营商                                        | ❌ 最严重                 |
+| 结果                                                 | 判定                     |
+| ---------------------------------------------------- | ------------------------ |
+| 仅节点那一侧的解析服务器（如 Cloudflare、Google 等） | ✅ 通过                   |
+| 出现腾讯、阿里（doh.pub / AliDNS）                   | ❌ 发生了本地解析，需排查 |
+| 出现当前运营商                                       | ❌ 最严重                 |
 
 **不符合时** 　① 回到第 1 步，确认 `browserleaks.com` 为兜底线路、「分流匹配优化」已开启；② 在「网络活动」中查找对 `browserleaks` 相关域名的记录，看命中了哪条规则；③ 确认 `[dns]` 中没有被放开的 `server = /域名/IP` 行。
 
@@ -149,11 +151,11 @@ stun:stun.miwifi.com:3478
 
 **预期结果** 　`udp_drop_list` 含 `STUN`，三个地址均应**没有 srflx 候选**；browserleaks 的 WebRTC 页不应显示任何公网 IP。
 
-| Trickle ICE 结果          | 判定                                        |
-| ------------------------- | ------------------------------------------- |
-| 无 srflx，仅 host         | ✅ STUN 被丢弃                               |
-| 出现节点 IP               | ⚠️ STUN 未被丢弃，但该路径走了代理，不泄露   |
-| 出现真实 IP               | ❌ 泄露                                      |
+| Trickle ICE 结果  | 判定                                      |
+| ----------------- | ----------------------------------------- |
+| 无 srflx，仅 host | ✅ STUN 被丢弃                             |
+| 出现节点 IP       | ⚠️ STUN 未被丢弃，但该路径走了代理，不泄露 |
+| 出现真实 IP       | ❌ 泄露                                    |
 
 > 💡 host 候选应为 mDNS 的 `xxxx.local` 形式，不会暴露局域网 IP。
 
@@ -211,12 +213,12 @@ stun:stun.miwifi.com:3478
 
 **预期结果**
 
-| 检查项                               | 预期                                        |
-| ------------------------------------ | ------------------------------------------- |
-| 三个 STUN 地址的 srflx               | **均为节点 IP**                             |
-| `stun.chat.bilibili.com`             | 命中 `HOST, STUN.CHAT.BILIBILI.COM` → proxy |
-| `stun.miwifi.com`                    | 命中 `HOST, STUN.MIWIFI.COM` → proxy        |
-| 第 5 步中失败的通话                  | 恢复正常                                    |
+| 检查项                   | 预期                                        |
+| ------------------------ | ------------------------------------------- |
+| 三个 STUN 地址的 srflx   | **均为节点 IP**                             |
+| `stun.chat.bilibili.com` | 命中 `HOST, STUN.CHAT.BILIBILI.COM` → proxy |
+| `stun.miwifi.com`        | 命中 `HOST, STUN.MIWIFI.COM` → proxy        |
+| 第 5 步中失败的通话      | 恢复正常                                    |
 
 **不符合时**
 
@@ -228,18 +230,18 @@ stun:stun.miwifi.com:3478
 
 ### 第 7 步 · 日常功能回归
 
-| 测试项                         | 预期结果                                                                  |
-| ------------------------------ | ------------------------------------------------------------------------- |
-| 淘宝、B站、微信、支付宝        | 正常且快，走直连                                                          |
-| Google、YouTube、Twitter       | 正常，走代理                                                              |
-| App Store、iCloud              | 正常，走「苹果服务」（默认 direct）                                       |
-| AI 服务（ChatGPT、Claude）     | 走「AI服务」策略组                                                        |
-| TikTok、PayPal、加密货币交易所 | 走各自设定的策略组，账户无异常提示                                        |
-| 随机打开几个冷门国内网站       | 能打开；若走了兜底线路导致变慢，按需单独加 direct 规则                    |
-| 公共 Wi-Fi 登录页              | 打不开时临时关闭 QX 完成登录，这是没有加密备用 DNS 的已知代价             |
-| 节点延迟测试                   | 各节点能正常显示延迟（测速地址已改为 `www.gstatic.com/generate_204`）     |
-| AirPlay 投屏、NAS、打印机等局域网设备 | 正常；私有网段已加入 `excluded_routes`，这类流量不再经过 QX         |
-| 小米路由器管理页 `miwifi.com`  | 连接小米路由器 Wi-Fi 时能正常打开                                         |
+| 测试项                                | 预期结果                                                              |
+| ------------------------------------- | --------------------------------------------------------------------- |
+| 淘宝、B站、微信、支付宝               | 正常且快，走直连                                                      |
+| Google、YouTube、Twitter              | 正常，走代理                                                          |
+| App Store、iCloud                     | 正常，走「苹果服务」（默认 direct）                                   |
+| AI 服务（ChatGPT、Claude）            | 走「AI服务」策略组                                                    |
+| TikTok、PayPal、加密货币交易所        | 走各自设定的策略组，账户无异常提示                                    |
+| 随机打开几个冷门国内网站              | 能打开；若走了兜底线路导致变慢，按需单独加 direct 规则                |
+| 公共 Wi-Fi 登录页                     | 打不开时临时关闭 QX 完成登录，这是没有加密备用 DNS 的已知代价         |
+| 节点延迟测试                          | 各节点能正常显示延迟（测速地址已改为 `www.gstatic.com/generate_204`） |
+| AirPlay 投屏、NAS、打印机等局域网设备 | 正常；私有网段已加入 `excluded_routes`，这类流量不再经过 QX           |
+| 小米路由器管理页 `miwifi.com`         | 连接小米路由器 Wi-Fi 时能正常打开                                     |
 
 ---
 
@@ -280,17 +282,17 @@ browserleaks 的 DNS 结果里出现 `2400:cb00::`、`2607:f8b0::`、`2620:171::
 
 ## 六、测试进度与结果
 
-> 测试环境：待填写 ｜ 所在地 ｜ 本地网络 ｜ 代理节点
+> 测试环境：2026-09-25 ｜ iPhone ｜ 当前网络不提供 IPv6 ｜ 所在地、本地网络、代理节点待补充
 
-| 测试项                  | iPhone |  Mac  | 说明                                                                                          |
-| ----------------------- | :----: | :---: | --------------------------------------------------------------------------------------------- |
-| 第 1 步 规则与重写      |   ⏸    |   ⬜   | 2026-09-25 已部分验证：baidu/bdstatic → DIRECT、telegram.org → Telegram、x.com → Twitter、未收录域名 → `HOST-KEYWORD, .`；检测站与 HTTPDNS 待测 |
-| 第 2 步 DNS 泄露        |   ⬜    |   ⬜   |                                                                                               |
-| 第 3 步 WebRTC 泄露     |   ⬜    |   ⬜   |                                                                                               |
-| 第 4 步 IPv6 泄露       |   ⬜    |   ⬜   |                                                                                               |
-| 第 5 步 通话功能        |   ⬜    |   ⬜   |                                                                                               |
-| 第 6 步 通话模式（可选）|   ⬜    |   ⬜   |                                                                                               |
-| 第 7 步 日常回归        |   ⬜    |   ⬜   |                                                                                               |
+| 测试项                   | iPhone |  Mac  | 说明                                                                                                   |
+| ------------------------ | :----: | :---: | ------------------------------------------------------------------------------------------------------ |
+| 第 1 步 规则与重写       |   ✅    |   ⬜   | 各域名命中预期规则；`browserleaks.com` 命中本地规则 → 兜底线路；未收录域名 → `HOST-KEYWORD, .`；HTTPDNS 请求被重写拒绝 |
+| 第 2 步 DNS 泄露         |   ✅    |   ⬜   | 顶部为节点 IP，解析服务器均在节点一侧，无腾讯、阿里，无运营商                                           |
+| 第 3 步 WebRTC 泄露      |   ✅    |   ⬜   | 三个 STUN 地址均无 srflx 候选，STUN 已被丢弃                                                             |
+| 第 4 步 IPv6 泄露        |   ⏸    |   ⏸   | 当前网络不提供 IPv6，结果无参考价值，需换网络补测                                                       |
+| 第 5 步 通话功能         |   ⬜    |   ⬜   | 待后续跟进                                                                                             |
+| 第 6 步 通话模式（可选） |   ⬜    |   ⬜   | 待后续跟进                                                                                             |
+| 第 7 步 日常回归         |   ⬜    |   ⬜   | 待后续跟进                                                                                             |
 
 <small>✅ 通过 ｜ ⏸ 待补测 ｜ ⬜ 待测</small>
 
@@ -298,11 +300,13 @@ browserleaks 的 DNS 结果里出现 `2400:cb00::`、`2607:f8b0::`、`2620:171::
 
 ## 七、待办清单
 
-- [ ] **执行第 1～7 步测试并记录结果**
-- [ ] **确认 `browserleaks.com` 命中本地规则** —— 第 1 步，决定检测站规则是否需改为 `host`
+- [x] **第 1～3 步（iPhone）** —— 2026-09-25 全部符合预期
+- [x] **确认 `browserleaks.com` 命中本地规则** —— 已确认，检测站规则保持 `host-suffix`
 - [x] **收窄 `dns_exclusion_list` 中的 `*.miwifi.com`** —— 已改为 `miwifi.com, www.miwifi.com`，四个客户端同步
 - [ ] **确认小米路由器管理页仍可访问** —— 连小米路由器的 Wi-Fi 时打开 `miwifi.com`
-- [ ] **IPv6 泄露测试** —— 需在有 IPv6 的网络下进行
+- [ ] **IPv6 泄露测试** —— 当前网络不提供 IPv6，需换到有 IPv6 的网络补测，如国内宽带或蜂窝数据
+- [ ] **第 5～7 步（iPhone）** —— 通话功能、通话模式（可选）、日常回归
+- [ ] **Mac 端完整跑一遍** —— 第 1～7 步（如在 Mac 上使用 QX）
 - [ ] **根据第 5 步结果决定默认模式** —— 通话需求多时，可评估常开通话模式
 
 ---
@@ -310,7 +314,7 @@ browserleaks 的 DNS 结果里出现 `2400:cb00::`、`2607:f8b0::`、`2620:171::
 ## 附录 分流规则匹配与 DNS 解析过程
 
 > 本节说明 QX 如何为一个请求选择规则、何时会发起本地 DNS 解析，以及 `[filter_local]` 中 `host-keyword, ., 兜底线路` 为什么能防止 DNS 泄漏。
-> 依据：官方 [sample.conf](https://raw.githubusercontent.com/crossutility/Quantumult-X/master/sample.conf)、[QX Wiki Book](https://qx.atlucky.me/shi-yong-fang-fa/pei-zhi-wen-jian-xiang-jie/filter-fen-liu-gui-ze)、[Lucy's Tool](https://wiki.repcz.link/quantumultx/filter/)，以及 2026-09-25 iPhone 实测。
+> 依据：官方 [sample.conf](https://raw.githubusercontent.com/crossutility/Quantumult-X/master/sample.conf)、[QX Wiki Book](https://qx.atlucky.me/shi-yong-fang-fa/pei-zhi-wen-jian-xiang-jie/filter-fen-liu-gui-ze)、[Lucy's Tool](https://wiki.repcz.link/quantumultx/filter/)。
 
 ### 1. QX 平时并不做 DNS 解析（Fake-IP）
 
@@ -322,12 +326,12 @@ App 访问 `x.com` 时，先向系统查询它的 IP。QX 不去真实解析，�
 
 ### 2. 不同类型的规则需要的信息不同
 
-| 规则类型 | 判断时需要什么 | 是否需要 DNS 解析 |
-|---|---|---|
-| `host` / `host-suffix` / `host-wildcard` / `host-keyword` | 只需要域名字符串 | **不需要** |
-| `user-agent` | 请求头里的 UA | 不需要（但只对明文 HTTP 或被 MITM 解密的 HTTPS 可见） |
-| `geoip` / `ip-cidr` / `ip6-cidr` / `ip-asn` | 需要真实 IP | **需要**：域名请求必须先解析出真实 IP |
-| `final` | 不需要任何信息 | 不需要 |
+| 规则类型                                                  | 判断时需要什么   | 是否需要 DNS 解析                                     |
+| --------------------------------------------------------- | ---------------- | ----------------------------------------------------- |
+| `host` / `host-suffix` / `host-wildcard` / `host-keyword` | 只需要域名字符串 | **不需要**                                            |
+| `user-agent`                                              | 请求头里的 UA    | 不需要（但只对明文 HTTP 或被 MITM 解密的 HTTPS 可见） |
+| `geoip` / `ip-cidr` / `ip6-cidr` / `ip-asn`               | 需要真实 IP      | **需要**：域名请求必须先解析出真实 IP                 |
+| `final`                                                   | 不需要任何信息   | 不需要                                                |
 
 一个**域名请求**只要走到 IP 类规则，QX 就会用 `[dns]` 的 `doh-server`（doh.pub 腾讯、alidns 阿里）在本地解析它。国内 DNS 服务商因此看到「这个用户在查某个境外域名」，这就是 **DNS 泄漏**。
 
@@ -428,15 +432,15 @@ QX **不支持** `no-resolve` 参数，无法像 Shadowrocket 那样让 IP 类�
 
 ### 5. 要点总结
 
-| 问题 | 结论 |
-|---|---|
-| `host-keyword, .` 为什么能防 DNS 泄漏 | 让未收录的域名在**不需要 DNS 的第 ④ 档**就分流完，走不到需要 DNS 的 geoip |
-| 为什么用 `.` | 所有域名都含「.」，它能接住任何域名 |
-| 为什么不会抢走其他规则 | 它在域名类**最低档**，更具体的域名规则（不论本地、远程）都先匹配 |
-| 为什么 `final` 做不到 | `final` 在第 ⑦ 档，请求到达时已经过第 ⑥ 档，DNS 查询早已发出。`final` 只决定线路，拦不住解析 |
-| 与 Shadowrocket 的对应 | 效果等同 `GEOIP,CN,DIRECT,no-resolve`：域名请求跳过 geoip，只有纯 IP 请求才按 geoip 分流 |
-| 前提条件 | 「分流匹配优化」必须开启 |
-| 代价 | ① 未收录的国内小站走代理；② 远程规则集里的 USER-AGENT 规则（China.list 31 条、Apple.list 23 条等，排在第 ⑤ 档）对域名请求不再生效。此前这些规则也只对明文 HTTP 有效，实际损失很小 |
+| 问题                                  | 结论                                                                                                                                                                              |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `host-keyword, .` 为什么能防 DNS 泄漏 | 让未收录的域名在**不需要 DNS 的第 ④ 档**就分流完，走不到需要 DNS 的 geoip                                                                                                         |
+| 为什么用 `.`                          | 所有域名都含「.」，它能接住任何域名                                                                                                                                               |
+| 为什么不会抢走其他规则                | 它在域名类**最低档**，更具体的域名规则（不论本地、远程）都先匹配                                                                                                                  |
+| 为什么 `final` 做不到                 | `final` 在第 ⑦ 档，请求到达时已经过第 ⑥ 档，DNS 查询早已发出。`final` 只决定线路，拦不住解析                                                                                      |
+| 与 Shadowrocket 的对应                | 效果等同 `GEOIP,CN,DIRECT,no-resolve`：域名请求跳过 geoip，只有纯 IP 请求才按 geoip 分流                                                                                          |
+| 前提条件                              | 「分流匹配优化」必须开启                                                                                                                                                          |
+| 代价                                  | ① 未收录的国内小站走代理；② 远程规则集里的 USER-AGENT 规则（China.list 31 条、Apple.list 23 条等，排在第 ⑤ 档）对域名请求不再生效。此前这些规则也只对明文 HTTP 有效，实际损失很小 |
 
 ### 6. 同一原理的其他应用
 
@@ -447,8 +451,8 @@ QX **不支持** `no-resolve` 参数，无法像 Shadowrocket 那样让 IP 类�
 
 打开 QX 首页的「网络活动」，每条请求下方显示 `规则类型, 规则内容, 策略`：
 
-| 看到的规则 | 含义 |
-|---|---|
-| `HOST-SUFFIX, BAIDU.COM, DIRECT` | 被规则集收录，正常分流 |
-| `HOST-KEYWORD, ., 兜底线路` | 未被收录的域名，由兜底规则接住，未做本地解析 |
+| 看到的规则                                       | 含义                                                                                               |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `HOST-SUFFIX, BAIDU.COM, DIRECT`                 | 被规则集收录，正常分流                                                                             |
+| `HOST-KEYWORD, ., 兜底线路`                      | 未被收录的域名，由兜底规则接住，未做本地解析                                                       |
 | 域名请求显示 `GEOIP, CN, DIRECT` 或 `IP-CIDR, …` | ⚠️ 域名走到了 IP 类规则，发生了本地解析。先检查「分流匹配优化」是否开启、`host-keyword, .` 是否仍在 |

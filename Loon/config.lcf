@@ -20,15 +20,18 @@ bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,1
 skip-proxy = localhost, *.local, captive.apple.com, e.crashlytics.com, www.baidu.com, passenger.t3go.cn, yunbusiness.ccb.com, wxh.wo.cn, gate.lagou.com, www.abchina.com.cn, login-service.mobile-bank.psbc.com, mobile-bank.psbc.com, 10.0.0.0/8, 127.0.0.1/32, 172.16.0.0/12, 192.168.0.0/16, 192.168.122.1/32, 193.168.0.1/32, ::1/128, fe80::/10
 
 # > DNS 服务器，多个 DNS 服务器使用英文逗号分隔
-# 普通 UDP DNS，system 表示系统 DNS
-dns-server = 223.5.5.5,119.29.29.29,114.114.114.114,223.6.6.6,system
-# DNS over HTTPS
-doh-server = https://doh.pub/dns-query,https://dns.alidns.com/dns-query,https://223.5.5.5/dns-query,https://223.6.6.6/dns-query,https://1.12.12.12/dns-query,https://120.53.53.53/dns-query
+# 普通 UDP DNS，system 表示系统 DNS。配置了加密 DNS 时本项不参与查询，仅在加密查询失败时作为回落（App「DNS 服务器」页可关闭回落）
+dns-server = 223.5.5.5, 119.29.29.29
+# DNS over HTTPS，加密 DNS 会并发查询下列所有服务器、采用最快结果
+doh-server = https://doh.pub/dns-query, https://dns.alidns.com/dns-query
+# DNS over QUIC，标准端口为 853，建议显式写明，使用 IP 形式，无需引导解析（相当于 Shadowrocket 中的 fallback-dns-server = quic://223.5.5.5）
+doq-server = quic://223.5.5.5:853
+# DNS over HTTP/3，与 DoQ 同走 QUIC，作用重复
+# doh3-server = h3://dns.alidns.com/dns-query
 
-# DNS over QUIC，默认端口为 784
-doq-server = quic://dns.alidns.com:853,quic://223.6.6.6:853,quic://223.5.5.5:853
-# DNS over HTTP/3
-doh3-server = h3://dns.alidns.com/dns-query,h3://223.6.6.6/dns-query,h3://223.5.5.5/dns-query
+# DNS 劫持（Loon 3.2.5+），App 硬编码的 UDP DNS 查询（如 8.8.8.8、114.114.114.114）返回 Fake IP，防止明文查询泄漏、保证域名规则生效
+# *:53 表示所有目标的 53 端口；局域网 DNS 已在 bypass-tun 中不受影响；DNS 测试类 App 会拿到 Fake IP，测试时临时关闭 Loon
+hijack-dns = *:53
 
 # IP 模式
 #  - ipv4-only: 仅使用 IPv4，不查询 AAAA，并拒绝 IPv6 连接
@@ -69,7 +72,7 @@ interface-mode = auto
 
 # DNS 数据包将被转发到上游 DNS 服务器。解决一些ip请求无法匹配规则的问题，real-ip指定的域名将不返回fake ip响应，直接将dns请求发往目标dns服务器
 # 小米路由器仅列管理域名 miwifi.com、www.miwifi.com，不用 *.miwifi.com：否则 stun.miwifi.com 会拿到真实 IP，按域名分流可能失效、STUN 直连暴露真实 IP。
-real-ip = *.lan, *.direct, *.localdomain, *.example, *.invalid, *.localhost, *.test, *.local, *.home.arpa, *.corp, *.internal, stun.playstation.net, *.stun.playstation.net, cable.auth.com, network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, msftconnecttest.com, *.msftconnecttest.com, msftncsi.com, *.msftncsi.com, captive.apple.com, *.connectivitycheck.gstatic.com, clients3.google.com, clients4.google.com, pool.ntp.org, *.pool.ntp.org, ntp.org.cn, *.ntp.org.cn, ntp.*.com, ntp?.*.com, time.*.com, time?.*.com, time.*.gov, time.*.edu.cn, heartbeat.belkin.com, *.linksys.com, *.linksyssmartwifi.com, *.router.asus.com, *.hiwifi.com, miwifi.com, www.miwifi.com, *.routerlogin.com, *.mymeraki.com, *.gl-inet.com, *.tplinkwifi.net, *.tendawifi.com, *.melogin.cn, *.falogin.cn, injections.adguard.org, local.adguard.org, mesu.apple.com, swscan.apple.com, swquery.apple.com, swdownload.apple.com, swcdn.apple.com, swdist.apple.com, *.apple.com.edgesuite.net, push-apple.com.akadns.net, lens.l.google.com, cmpassport.com, *.cmpassport.com, id6.me, open.e.189.cn, opencloud.wostore.cn, id.mail.wo.cn, mdn.open.wo.cn, hmrz.wo.cn, nishub1.10010.com, enrichgw.10010.com, wosms.cn, *.wosms.cn, jegotrip.com.cn, *.jegotrip.com.cn, icitymobile.mobi, *.icitymobile.mobi, 10099.com.cn, *.10099.com.cn, microdone.cn, *.microdone.cn, pingan.com.cn, *.pingan.com.cn, cmbchina.com, *.cmbchina.com, localhost.*.qq.com, localhost.*.weixin.qq.com, mcdn.bilivideo.cn, *.mcdn.bilivideo.cn, music.163.com, *.music.163.com, 126.net, *.126.net, *.music.126.net, musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, kuwo.cn, *.kuwo.cn, joox.com, *.joox.com, api-jooxtt.sanook.com, y.qq.com, *.y.qq.com, streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, music.migu.cn, *.music.migu.cn, srv.nintendo.net, *.srv.nintendo.net, *.n.n.srv.nintendo.net, xbox.*.microsoft.com, xboxlive.com, *.xboxlive.com, ipv6.microsoft.com, *.ipv6.microsoft.com, battlenet.com.cn, *.battlenet.com.cn, *.logon.battlenet.com.cn, logon.battle.net, *.logon.battle.net, blzstatic.cn, *.blzstatic.cn, wotgame.cn, *.wotgame.cn, wggames.cn, *.wggames.cn, wowsgame.cn, *.wowsgame.cn, wargaming.net, *.wargaming.net, pvp.net, *.pvp.net, *.square-enix.com, *.finalfantasyxiv.com, *.ffxiv.com, *.ff14.sdo.com, ff.dorado.sdo.com, PDC._msDCS.*.*, DC._msDCS.*.*, GC._msDCS.*.*, proxy.golang.org, app.yinxiang.com
+real-ip = *.lan, *.direct, *.localdomain, *.example, *.invalid, *.localhost, *.test, *.local, *.home.arpa, *.corp, *.internal, stun.playstation.net, *.stun.playstation.net, cable.auth.com, network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, msftconnecttest.com, *.msftconnecttest.com, msftncsi.com, *.msftncsi.com, captive.apple.com, pool.ntp.org, *.pool.ntp.org, ntp.org.cn, *.ntp.org.cn, ntp.*.com, ntp?.*.com, time.*.com, time?.*.com, time.*.gov, time.*.edu.cn, heartbeat.belkin.com, *.linksys.com, *.linksyssmartwifi.com, *.router.asus.com, *.hiwifi.com, miwifi.com, www.miwifi.com, *.routerlogin.com, *.mymeraki.com, *.gl-inet.com, *.tplinkwifi.net, *.tendawifi.com, *.melogin.cn, *.falogin.cn, injections.adguard.org, local.adguard.org, mesu.apple.com, swscan.apple.com, swquery.apple.com, swdownload.apple.com, swcdn.apple.com, swdist.apple.com, *.apple.com.edgesuite.net, push-apple.com.akadns.net, cmpassport.com, *.cmpassport.com, id6.me, open.e.189.cn, opencloud.wostore.cn, id.mail.wo.cn, mdn.open.wo.cn, hmrz.wo.cn, nishub1.10010.com, enrichgw.10010.com, wosms.cn, *.wosms.cn, jegotrip.com.cn, *.jegotrip.com.cn, icitymobile.mobi, *.icitymobile.mobi, 10099.com.cn, *.10099.com.cn, microdone.cn, *.microdone.cn, pingan.com.cn, *.pingan.com.cn, cmbchina.com, *.cmbchina.com, localhost.*.qq.com, localhost.*.weixin.qq.com, mcdn.bilivideo.cn, *.mcdn.bilivideo.cn, music.163.com, *.music.163.com, 126.net, *.126.net, *.music.126.net, musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, kuwo.cn, *.kuwo.cn, joox.com, *.joox.com, api-jooxtt.sanook.com, y.qq.com, *.y.qq.com, streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, music.migu.cn, *.music.migu.cn, srv.nintendo.net, *.srv.nintendo.net, *.n.n.srv.nintendo.net, xbox.*.microsoft.com, xboxlive.com, *.xboxlive.com, ipv6.microsoft.com, *.ipv6.microsoft.com, battlenet.com.cn, *.battlenet.com.cn, *.logon.battlenet.com.cn, logon.battle.net, *.logon.battle.net, blzstatic.cn, *.blzstatic.cn, wotgame.cn, *.wotgame.cn, wggames.cn, *.wggames.cn, wowsgame.cn, *.wowsgame.cn, wargaming.net, *.wargaming.net, pvp.net, *.pvp.net, *.square-enix.com, *.finalfantasyxiv.com, *.ffxiv.com, *.ff14.sdo.com, ff.dorado.sdo.com, PDC._msDCS.*.*, DC._msDCS.*.*, GC._msDCS.*.*, app.yinxiang.com
 
 # 禁止指定端口使用 UDP
 disable-udp-ports = 443,80
@@ -285,6 +288,7 @@ https://cdn.jsdelivr.net/gh/iab0x00/ProxyRules@main/Rule/Crypto.txt, policy = Cr
 
 # Apple
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Apple/Apple.list, policy = 苹果服务, tag = 苹果服务, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Apple/Apple_Domain.list, policy = 苹果服务, tag = 苹果服务域名, enabled = true
 # Microsoft
 #https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Microsoft/Microsoft.list, policy = 微软服务, tag = 微软服务, enabled = true
 # Github
@@ -318,6 +322,7 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/BiliBi
 
 # 直连/代理 兜底
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/China/China.list, policy = DIRECT, tag = 国内直连, enabled = true
+https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/China/China_Domain.list, policy = DIRECT, tag = 国内直连域名, enabled = true
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global/Global.list, policy = 兜底线路, tag = 国际代理, enabled = true
 
 
@@ -336,13 +341,25 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global
 # IP-CIDR, 224.0.0.0/24, DIRECT
 # IP-CIDR, 182.254.116.0/24, DIRECT
 
+# 安全防护检测
+DOMAIN-SUFFIX, browserleaks.com, 兜底线路
+DOMAIN-SUFFIX, browserleaks.net, 兜底线路
+DOMAIN-SUFFIX, browserleaks.org, 兜底线路
+DOMAIN-SUFFIX, ipleak.net, 兜底线路
+DOMAIN-SUFFIX, dnsleaktest.com, 兜底线路
+DOMAIN-SUFFIX, whoer.net, 兜底线路
+DOMAIN-SUFFIX, test-ipv6.com, 兜底线路
+DOMAIN-SUFFIX, ip.sb, 兜底线路
+DOMAIN-SUFFIX, whatismyip.com, 兜底线路
+DOMAIN-SUFFIX, myip.la, 兜底线路
+
 # 自定义分流规则
 DOMAIN-KEYWORD, apple, 苹果服务
 DOMAIN-KEYWORD, google, 谷歌服务
 DOMAIN-KEYWORD, youtube, YouTube
 
 # 根据 GEOIP 数据库判断IP是否属于CN地区，若匹配到，将走直连
-GEOIP, CN, DIRECT
+GEOIP, CN, DIRECT, no-resolve
 
 # 当以上所有 本地/远程 规则都未匹配到时，将使用 FINAL 规则的策略
 #FINAL, PROXY

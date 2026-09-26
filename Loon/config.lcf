@@ -50,14 +50,30 @@ wifi-access-http-port = 8801
 # 局域网 SOCKS5 代理端口
 wifi-access-socks5-port = 8802
 
-# 节点测速地址，策略组未单独指定地址时使用此项
+# 代理节点测速地址，策略组未单独指定地址时使用此项
+# 注：请求经节点发出，服务商只看到节点 IP，勿用国内地址（测的是节点回国线路）
+# Google（Android 联网检测所用）
+#proxy-test-url = http://connectivitycheck.gstatic.com/generate_204
+# Google（www.google.com 对机房 IP 偶有人机验证，generate_204 一般不受影响）
 #proxy-test-url = http://www.google.com/generate_204
+# Cloudflare（接入点最多、延迟最低，节点本身架在 Cloudflare 上时测得延迟偏低）
 #proxy-test-url = http://cp.cloudflare.com/generate_204
+# Google（全球就近接入）
 proxy-test-url = http://www.gstatic.com/generate_204
 
-# 网络可用性检测地址，建议使用可直连访问的 URL
+# 网络可用性检测地址，建议使用可直连访问地址
+# 以下均返回 204、国内可直连且稳定，检测请求仅让厂商得知「有设备在检测网络」
+# 注：http://www.apple.com/generate_204 返回 301 重定向而非 204，不建议使用
+# 华为
 #internet-test-url = http://connectivitycheck.platform.hicloud.com/generate_204
-internet-test-url = http://www.apple.com/generate_204
+# vivo（Loon 官方文档示例）
+#internet-test-url = http://wifi.vivo.com.cn/generate_204
+# 小米
+#internet-test-url = http://connect.rom.miui.com/generate_204
+# 微软（Windows 联网检测所用）
+#internet-test-url = http://edge-http.microsoft.com/captiveportal/generate_204
+# 高通（国内外均有节点，出境时同样可用）
+internet-test-url = http://www.qualcomm.cn/generate_204
 
 # 节点测速超时时间，单位为秒
 test-timeout = 3
@@ -98,7 +114,7 @@ udp-fallback-mode = REJECT
 #geoip-url = https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb
 #geoip-url = https://raw.githubusercontent.com/Hackl0us/GeoIP2-CN/release/Country.mmdb
 #geoip-url = https://raw.githubusercontent.com/Moli-X/Tool/X/GeoIP/CN_Country.mmdb
-#geoip-url = https:///raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GeoIP/GeoIP2-CN/Country.mmdb
+#geoip-url = https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GeoIP/GeoIP2-CN/Country.mmdb
 # -- GLOBAL -- #
 #geoip-url = https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GeoIP/GeoLite2-Country.mmdb
 geoip-url = https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
@@ -161,6 +177,9 @@ dns-reject-mode = LoopbackIP
 # 将分流规则传递过来的网络请求进行分发
 # =====================================
 [Proxy Group]
+# > 主代理（Loon 无内置 PROXY，此组对应 Shadowrocket/QuantumultX 首页所选节点，其它策略组默认跟随此处）
+PROXY = select, 个人VPS_01, 个人VPS_02, 静态住宅或ISP, 优选订阅1, 优选订阅2, 公益订阅1, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+
 # > 基础策略
 广告拦截 = select, REJECT, DIRECT, img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/AdBlock.png
 
@@ -180,7 +199,7 @@ Facebook = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点
 TikTok = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png
 
 # 影音流媒体
-哔哩哔哩 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
+哔哩哔哩 = select, DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
 YouTube = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png
 其它流媒体 = select, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
 
@@ -198,12 +217,12 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 调控线路 = select, DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 
 # 兜底策略
-兜底线路 = select, PROXY, DIRECT, 订阅优选1, 订阅优选2, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
+兜底线路 = select, PROXY, DIRECT, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
 
 # > 自定义指定代理
-静态住宅或ISP = select,RES_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
-个人VPS_01 = select,VPS01_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
-个人VPS_02 = select,VPS02_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
+静态住宅或ISP = select, RES_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/China.png
+个人VPS_01 = select, VPS01_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
+个人VPS_02 = select, VPS02_Filter, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Personal.png
 优选订阅1 = select, SUB_Filter_1, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 优选订阅2 = select, SUB_Filter_2, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 公益订阅1 = select, SUB_Free_1, img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Piao.png
@@ -213,14 +232,14 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 #  - url: 测速的url，loon会向该url发起header请求。若未配置，则使用 [General] 中的 proxy-test-url 项进行测速
 #  - interval: 测速间隔时间，单位秒
 #  - tolerance: 容差，如果当前测速后的最优节点和之前最优节点的测速相差小于tolerance，将不会进行节点切换，单位毫秒
-香港节点 = url-test, HK_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-台湾节点 = url-test, TW_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-新加坡节点 = url-test, SG_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
-日本节点 = url-test, JP_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-韩国节点 = url-test, KR_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-美国节点 = url-test, US_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-加拿大节点 = url-test, CA_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
-其它节点 = select, OTHER_Filter, interval = 3600, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Nations.png
+香港节点 = url-test, HK_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+台湾节点 = url-test, TW_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+新加坡节点 = url-test, SG_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+日本节点 = url-test, JP_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+韩国节点 = url-test, KR_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+美国节点 = url-test, US_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+加拿大节点 = url-test, CA_Filter, interval = 1800, tolerance = 300, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
+其它节点 = select, OTHER_Filter, img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Nations.png
 
 
 # =====================================
@@ -229,7 +248,6 @@ CryptoCurrency = select, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 
 [Remote Filter]
 RES_Filter = NameRegex, FilterKey = "🏠|静态|住宅|(?i)ISP"
 VPS01_Filter = NameRegex, FilterKey = "Pri_V_01|P_VPS_01"
-VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
 VPS02_Filter = NameRegex, FilterKey = "Pri_V_02|P_VPS_02"
 SUB_Filter_1 = NameRegex, FilterKey = "(?=.*(优选|电信|联通|移动))^((?!(CF官方)).)*$"
 SUB_Filter_2 = NameRegex, FilterKey = "CF官方"
@@ -465,8 +483,8 @@ https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon-par
 
 # ------ 节点检测 ------ #
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality-Web/IPQuality-Web.plugin, tag = 节点IP质量检测(混合模式), enabled = false
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality/IPQuality.plugin, tag = 节点IP质量检测, enabled = ture
-https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Block_Check/Block_Check.plugin, tag = 节点连通性检测, enabled = ture
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/IPQuality/IPQuality.plugin, tag = 节点IP质量检测, enabled = true
+https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Block_Check/Block_Check.plugin, tag = 节点连通性检测, enabled = true
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/Loon/NodeTools/NodeTools.plugin, tag = 节点检测工具𝕂, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Node_detection_tool.plugin, tag = 节点检测工具, enabled = false
 
@@ -482,12 +500,12 @@ https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/PikPak/PikPak.plu
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Nicegram/Nicegram.plugin, tag = Nicegram解锁, enabled = false
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/Spotify/Spotify.plugin, tag = Spotify解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/PornHubPremium/PornHubPremium.plugin, tag = P站解锁, enabled = false
-https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.lpx, tag = PTB&91P解锁, enabled = false
+#https://raw.githubusercontent.com/Yu9191/Rewrite/main/porntube/modules/porntube.lpx, tag = PTB&91P解锁, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/HaiJiao/HaiJiao.plugin, tag = 海角社区解锁, enabled = false
 
 # ------ 广告净化 ------ #
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = false
-http://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = false
+https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/Block_HTTPDNS.plugin, tag = HTTPDNS拦截器, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/ASN-China/Loon-HTTPDNS.Block.plugin, tag = HTTPDNS拦截器, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag = YouTube去广告, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Weixin_Official_Accounts_remove_ads.plugin, tag = 微信公众号去广告, enabled = true
@@ -507,16 +525,16 @@ https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Talkatone/Talkato
 https://raw.githubusercontent.com/Moli-X/Resources/main/Loon/91Porn_ads.plugin, tag = 91P网页去广告, enabled = true
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JavDB/JavDB.plugin, tag = JavDB去广告&跳转MissAV, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/MissAV/MissAV.plugin, tag = MissAV去广告, enabled = false
-https://raw.githubusercontent.com/Yu9191/Rewrite/main/ydm.plugin, tag = YDM网页去广告, enabled = false
+#https://raw.githubusercontent.com/Yu9191/Rewrite/main/ydm.plugin, tag = YDM网页去广告, enabled = false
 
 # ------ 网页优化 ------ #
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GithubAutoRaw/GithubAutoRaw.plugin, tag = GitHub源文件重定向为Raw, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/GitRawAutoCDN/GitRawAutoCDN.plugin, tag = GitHub源文件自动CDN, enabled = false
 
 # ------ 功能增强 ------ #
-https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon.plugin, tag = Sub-Store, enabled = fasle
-https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/modules/script-hub.loon.plugin, tag = Script-Hub, enabled = fasle
-https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = fasle
+https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Loon.plugin, tag = Sub-Store, enabled = false
+https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/modules/script-hub.loon.plugin, tag = Script-Hub, enabled = false
+#https://raw.githubusercontent.com/Yu9191/wloc/main/modules/wloc.lpx, tag = AppleWLOC, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/AppleWeatherEnhancer.plugin, tag = Apple天气增强, enabled = false
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/JD_Price.plugin, tag = 京东比价, enabled = false
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JD_Price/JD_Price.plugin, tag = 京东比价, enabled = false

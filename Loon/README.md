@@ -84,7 +84,7 @@ OR,((GEOIP,CN,no-resolve)),DIRECT
 - [ ] 插件列表中「HTTPDNS拦截器」为**启用**状态
 - [ ] 运行模式为**规则模式**，而不是全局代理或全局直连
 - [ ] 策略组中出现 **`PROXY`**，并已在其中选好节点；「兜底线路」当前选择的是 `PROXY`，而不是 `DIRECT`
-- [ ] 选好节点，确认能正常上网；第 6 步需要所选节点**支持 UDP 转发**
+- [ ] 选好节点，确认能正常上网；第 6 步需要所选节点**支持 UDP 转发**，且订阅**开启 UDP**（`udp = true`）
 - [ ] 记下真实 IP 备用：先关闭 Loon，访问 `ip.sb` 记录 IP，再重新开启
 - [ ] 打开 Loon 的**请求记录**（仪表 › 最近请求，不同版本名称略有差异），清空已有记录，方便后续查看
 
@@ -107,7 +107,8 @@ OR,((GEOIP,CN,no-resolve)),DIRECT
 | `https://www.icloud.com`               | `DOMAIN-SUFFIX,icloud.com`（Apple_Domain）  | 苹果服务     | **新增的 Apple_Domain.list 已生效**             |
 | `https://x.com`                        | `DOMAIN-SUFFIX,x.com`（Twitter.list）       | Twitter      | 远程分类规则集正常                              |
 | `https://telegram.org`                 | `DOMAIN-SUFFIX,telegram.org`（Telegram.list） | Telegram   | 同上                                            |
-| `https://www.google.com`               | 本地 `DOMAIN-KEYWORD,google`                | 谷歌服务     | 本地规则优先于订阅规则                          |
+| `https://www.google.com`               | `DOMAIN-SUFFIX,google.com`（Google.list）   | 谷歌服务     | 远程分类规则集正常                              |
+| `https://gemini.google.com`            | `DOMAIN,gemini.google.com`（AI.list）       | **AI服务**   | 本地关键词规则已注释，不再截走 AI.list          |
 | `https://browserleaks.com`             | 本地 `DOMAIN-SUFFIX,browserleaks.com`       | **兜底线路** | 本地检测站规则压过 China_Domain.list            |
 | `http://httpbin.org`                   | `FINAL`                                     | 兜底线路     | **`GEOIP` 的 `no-resolve` 生效**，未做本地解析 |
 | `http://neverssl.com`                  | `FINAL`                                     | 兜底线路     | 同上                                            |
@@ -252,7 +253,8 @@ stun:106.12.71.140:3478
 
 - **IP 形式的 STUN 出现真实 IP**：`PROTOCOL,STUN` 未生效，在请求记录中确认它命中了哪条规则。
 - **某个 STUN 域名出现真实 IP**：它未被 `DOMAIN` 规则或 `PROTOCOL,STUN` 接住，在请求记录中查看命中的规则。若是 `stun.miwifi.com`，检查 `real-ip` 中是否又出现了 `*.miwifi.com`（现已收窄为 `miwifi.com, www.miwifi.com`）。
-- **通话仍失败**：检查所选节点是否支持 UDP 转发；不支持时受 `udp-fallback-mode = REJECT` 影响会直接失败。
+- **通话仍失败**：检查所选节点是否支持 UDP 转发、订阅是否开启 UDP（`udp = true`）；不满足时受 `udp-fallback-mode = REJECT` 影响会直接失败。
+- **观察项（非泄漏）**：打开 YouTube，在请求记录中查看是否有 UDP 443 请求走了代理。`PROTOCOL,QUIC,REJECT` 受「域名规则优先」影响，可能拦不住发往已收录域名的 QUIC。
 
 <br>
 
@@ -263,7 +265,7 @@ stun:106.12.71.140:3478
 | 淘宝、B站、微信、支付宝、知乎         | 正常且快，走直连（B站走「哔哩哔哩」组，默认 DIRECT）                             |
 | Google、YouTube、Twitter              | 正常，走代理                                                                     |
 | App Store、iCloud                     | 正常，走「苹果服务」（默认 DIRECT）                                              |
-| AI 服务（ChatGPT、Claude）            | 走「AI服务」策略组                                                               |
+| AI 服务（ChatGPT、Claude、Gemini）    | 走「AI服务」策略组                                                               |
 | TikTok、PayPal、加密货币交易所        | 走各自设定的策略组，账户无异常提示                                               |
 | 切换 `PROXY` 组中的节点               | 默认选 `PROXY` 的策略组（兜底线路、谷歌服务等）随之切换                          |
 | 随机打开几个冷门国内网站              | 能打开；若走了兜底线路导致变慢，按需单独加 DIRECT 规则                           |
@@ -304,9 +306,9 @@ stun:106.12.71.140:3478
 
 ### 本地规则优先于订阅规则（与 QuantumultX 不同）
 
-Loon 的规则来源优先级为**本地 > 插件 > 订阅**，与规则类型无关。因此本地的 `DOMAIN-KEYWORD,google` 会压过远程规则集中的 `DOMAIN-SUFFIX,googleapis.com`；检测站、通话模式的本地规则也一定生效。
+Loon 的规则来源优先级为**本地 > 插件 > 订阅**，与规则类型无关。因此检测站、通话模式的本地规则一定生效；反过来，本地的宽泛规则也会截走远程规则集的正确分流。
 
-副作用：`AI.list` 中 Apple 智能相关域名（如 `guzzoni.apple.com`）会先被本地 `DOMAIN-KEYWORD,apple` 接住，走「苹果服务」而不是「AI服务」。
+例：原配置的本地 `DOMAIN-KEYWORD,apple / google / youtube` 会把 AI.list 的 Gemini、Apple 智能域名分到谷歌服务、苹果服务（DIRECT），把 Advertising.list 的 `applovin`、`googleads` 从广告拦截中放过，把 Global.list 的 `appledaily` 分到直连。这 3 条现已注释，由远程规则集负责。
 
 ### 解析服务器的 IPv6 地址不是泄露
 

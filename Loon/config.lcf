@@ -18,7 +18,7 @@
 bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,239.255.255.250/32,255.255.255.255/32
 
 # 跳过某个域名或者 IP 段，这些目标主机将不会由 Loon Proxy 处理
-skip-proxy = localhost, *.local, captive.apple.com, e.crashlytics.com, www.baidu.com, passenger.t3go.cn, yunbusiness.ccb.com, wxh.wo.cn, gate.lagou.com, www.abchina.com.cn, login-service.mobile-bank.psbc.com, mobile-bank.psbc.com, 10.0.0.0/8, 127.0.0.1/32, 172.16.0.0/12, 192.168.0.0/16, 192.168.122.1/32, 193.168.0.1/32, ::1/128, fe80::/10
+skip-proxy = localhost, *.local, captive.apple.com, e.crashlytics.com, www.baidu.com, passenger.t3go.cn, yunbusiness.ccb.com, wxh.wo.cn, gate.lagou.com, www.abchina.com.cn, login-service.mobile-bank.psbc.com, mobile-bank.psbc.com, 10.0.0.0/8, 127.0.0.1/32, 172.16.0.0/12, 192.168.0.0/16, ::1/128, fe80::/10
 
 # 普通 UDP DNS，system 表示系统 DNS。配置了加密 DNS 时本项不参与查询，仅在加密查询失败时作为回落（App「DNS 服务器」页可关闭回落）
 dns-server = 223.5.5.5, 119.29.29.29
@@ -89,7 +89,7 @@ test-timeout = 3
 #  - Cellular: 在WiFi和蜂窝数据都开启的情况下指定使用蜂窝网络
 #  - Performace: 在WiFi和蜂窝数据都开启的情况下使用最优的网络接口
 #  - Balance: 在WiFi和蜂窝数据都开启的情况下，均衡使用网络接口
-interface-mode = auto
+interface-mode = Auto
 
 # DNS 数据包将被转发到上游 DNS 服务器。解决一些ip请求无法匹配规则的问题，real-ip指定的域名将不返回fake ip响应，直接将dns请求发往目标dns服务器
 real-ip = *.lan, *.direct, *.localdomain, *.example, *.invalid, *.localhost, *.test, *.local, *.home.arpa, *.corp, *.internal, stun.playstation.net, *.stun.playstation.net, cable.auth.com, network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, msftconnecttest.com, *.msftconnecttest.com, msftncsi.com, *.msftncsi.com, captive.apple.com, pool.ntp.org, *.pool.ntp.org, ntp.org.cn, *.ntp.org.cn, ntp.*.com, ntp?.*.com, time.*.com, time?.*.com, time.*.gov, time.*.edu.cn, heartbeat.belkin.com, *.linksys.com, *.linksyssmartwifi.com, *.router.asus.com, *.hiwifi.com, miwifi.com, www.miwifi.com, *.routerlogin.com, *.mymeraki.com, *.gl-inet.com, *.tplinkwifi.net, *.tendawifi.com, *.melogin.cn, *.falogin.cn, injections.adguard.org, local.adguard.org, mesu.apple.com, swscan.apple.com, swquery.apple.com, swdownload.apple.com, swcdn.apple.com, swdist.apple.com, *.apple.com.edgesuite.net, push-apple.com.akadns.net, cmpassport.com, *.cmpassport.com, id6.me, open.e.189.cn, opencloud.wostore.cn, id.mail.wo.cn, mdn.open.wo.cn, hmrz.wo.cn, nishub1.10010.com, enrichgw.10010.com, wosms.cn, *.wosms.cn, jegotrip.com.cn, *.jegotrip.com.cn, icitymobile.mobi, *.icitymobile.mobi, 10099.com.cn, *.10099.com.cn, microdone.cn, *.microdone.cn, pingan.com.cn, *.pingan.com.cn, cmbchina.com, *.cmbchina.com, localhost.*.qq.com, localhost.*.weixin.qq.com, mcdn.bilivideo.cn, *.mcdn.bilivideo.cn, music.163.com, *.music.163.com, 126.net, *.126.net, *.music.126.net, musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, kuwo.cn, *.kuwo.cn, joox.com, *.joox.com, api-jooxtt.sanook.com, y.qq.com, *.y.qq.com, streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, music.migu.cn, *.music.migu.cn, srv.nintendo.net, *.srv.nintendo.net, *.n.n.srv.nintendo.net, xbox.*.microsoft.com, xboxlive.com, *.xboxlive.com, ipv6.microsoft.com, *.ipv6.microsoft.com, battlenet.com.cn, *.battlenet.com.cn, *.logon.battlenet.com.cn, logon.battle.net, *.logon.battle.net, blzstatic.cn, *.blzstatic.cn, wotgame.cn, *.wotgame.cn, wggames.cn, *.wggames.cn, wowsgame.cn, *.wowsgame.cn, wargaming.net, *.wargaming.net, pvp.net, *.pvp.net, *.square-enix.com, *.finalfantasyxiv.com, *.ffxiv.com, *.ff14.sdo.com, ff.dorado.sdo.com, PDC._msDCS.*.*, DC._msDCS.*.*, GC._msDCS.*.*, app.yinxiang.com
@@ -102,7 +102,7 @@ disable-udp-ports = 443,80
 disable-stun = true
 
 # 「通话模式」需要通话时：注释上面 disable-udp-ports、disable-stun 两行，放开下面两行，并放开 [Rule] 中「通话模式配套」规则，通话结束后改回
-#  此模式下 STUN 按规则走代理，srflx 显示节点 IP，前提是节点支持 UDP 转发，否则受 udp-fallback-mode = REJECT 影响，通话直接失败
+#  此模式下 STUN 按规则走代理，srflx 显示节点 IP，前提是节点支持 UDP 转发且订阅开启 UDP（udp = true），否则受 udp-fallback-mode = REJECT 影响，通话直接失败
 # disable-udp-ports = 80
 # disable-stun = false
 
@@ -135,7 +135,7 @@ domain-reject-mode = DNS
 #  - LOOPBACKIP: 返回回环 IP
 #  - NOANSWER: 返回空 DNS 响应
 #  - NXDOMAIN: 返回错误码 3
-dns-reject-mode = LoopbackIP
+dns-reject-mode = LOOPBACKIP
 
 
 # =====================================
@@ -397,12 +397,13 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global
 # > 通话模式配套（默认关闭）
 # 【启用】按 [General]「通话模式」说明切换 disable-udp-ports、disable-stun，再放开本段规则，通话结束后改回。
 # 【作用】STUN 一律走代理，srflx 显示节点 IP；不丢弃 STUN 报文，通话可正常建立。
-# 【前提】节点须支持 UDP 转发，否则 udp-fallback-mode = REJECT 会使通话失败。
+# 【前提】节点须支持 UDP 转发，且订阅开启 UDP（udp = true），否则 udp-fallback-mode = REJECT 会使通话失败。
 # 【覆盖】PROTOCOL,STUN 按协议匹配，不限域名、IP、端口，可覆盖以 IP 形式指定的 STUN。
 #        但目标为域名时 Loon 先匹配域名规则，故另加常见 STUN 的 DOMAIN 规则（本地优先），压过远程直连规则
 #        （如 bilibili.com、miwifi.com），DOMAIN-KEYWORD 兜底未被收录的 stun 域名。
 #        放开 UDP 443 后，由 PROTOCOL,QUIC,REJECT 继续屏蔽 QUIC。
 # 【局限】通话媒体流（非 STUN）仍按 IP 规则分流，对方 IP 在国内时命中 GEOIP 走直连。
+#        PROTOCOL,QUIC,REJECT 同样受「域名规则优先」影响，发往已收录域名的 QUIC 可能先命中域名规则走代理而非被拒绝（不造成泄漏）。
 # 【自测】Trickle ICE：srflx 应为节点 IP（与 ip.sb 一致）。
 # ------------------------------------------------------------------
 # PROTOCOL,STUN,兜底线路
@@ -436,9 +437,11 @@ DOMAIN-SUFFIX,whatismyip.com,兜底线路
 DOMAIN-SUFFIX,myip.la,兜底线路
 
 # > 自定义分流规则
-DOMAIN-KEYWORD,apple,苹果服务
-DOMAIN-KEYWORD,google,谷歌服务
-DOMAIN-KEYWORD,youtube,YouTube
+# Loon 本地规则整体优先于远程规则集，这 3 条会截走 AI.list（Gemini、Apple 智能）、Advertising.list（applovin、googleads）、Global.list（appledaily）的正确分流；相应域名已由 Google、
+# YouTube、Apple、Apple_Domain 等规则集覆盖，且 Loon 规则查询在毫秒内，去掉对效率影响很小。
+# DOMAIN-KEYWORD,apple,苹果服务
+# DOMAIN-KEYWORD,google,谷歌服务
+# DOMAIN-KEYWORD,youtube,YouTube
 
 # > 防 DNS 泄漏
 # 根据 GEOIP 数据库判断 IP 是否属于 CN 地区，若匹配到，将走直连。
@@ -509,7 +512,6 @@ https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/Block_HTT
 https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/ASN-China/Loon-HTTPDNS.Block.plugin, tag = HTTPDNS拦截器, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/YouTube_remove_ads.plugin, tag = YouTube去广告, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Weixin_Official_Accounts_remove_ads.plugin, tag = 微信公众号去广告, enabled = true
-https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/WexinMiniPrograms_Remove_ads.plugin, tag = 微信小程序去广告, enabled = true
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Weixin_external_links_unlock.plugin, tag = 微信外部链接解锁, enabled = false
 
 https://raw.githubusercontent.com/Moli-X/Tool/X/Loon/Plugin/Kelee/Bilibili_remove_ads.plugin, tag = 哔哩去广告, enabled = false
@@ -546,6 +548,6 @@ https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JD_Price/JD_Price
 [MITM]
 skip-server-cert-verify = false
 # 前缀 - 表示排除特定主机名，即：不可 MitM 也不应该被打断连接的域名
-hostname = *.example.com, *.sample.com, -gateway.icloud.com, -gateway.icloud.com.cn, -weather-data.apple.com, -buy.itunes.apple.com, -pan.baidu.com
+hostname = *.example.com, -*.icloud.com, -gateway.icloud.com, -gateway.icloud.com.cn, -weather-data.apple.com, -buy.itunes.apple.com, -pan.baidu.com
 ca-p12 = 
 ca-passphrase = 

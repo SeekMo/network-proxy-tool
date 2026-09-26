@@ -517,7 +517,7 @@ proxy-providers:
   #   interval: 10800
   #   filter: '🟢|🟡|🟠'
   #   benchmark-disabled: false # 设置为 `true` 时完全禁用延迟测试
-  #   benchmark-url: http://www.apple.com/generate_204 # 建议只使用 HTTP 协议
+  #   benchmark-url: http://www.gstatic.com/generate_204 # 建议只使用 HTTP 协议
   #   benchmark-timeout: 5 # 延迟测试超时时间，单位：秒
     
 

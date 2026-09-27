@@ -126,23 +126,11 @@ script:
     #       若不想拦截 QUIC，请同时注释掉 [rules] 段那一行，而不是只注释这里。
     quic: network == 'udp' and (dst_port == 443 or dst_port == 4483 or dst_port == 9305)
 
-    # WebRTC 硬编码 STUN 拦截 —— 补齐 fake-ip-filter 管不到的绕过路径
-    # 【为什么需要】fake-ip-filter 只能拦「先查 DNS 再连接」的流量。
-    #   网页 JS 可以直接对 STUN 服务器的 IP 字面量发 UDP（例如
-    #   74.125.250.129:19302），全程不产生 DNS 查询，fake-ip 完全失效。
-    #   只有按端口拦截才能封死这条路。
-    # 【端口选择】19302-19309 是 Google 公共 STUN 的固定端口，也是浏览器
-    #   WebRTC 的事实默认。游戏主机不使用这段端口，因此拦截它不影响
-    #   PS / Switch / Xbox 的 NAT 检测（主机走的是 3478-3480）。
+    # WebRTC STUN 端口拦截（备用，默认不引用）
+    # 已由 [rules] 中 PROTOCOL,STUN 按协议拦截取代：端口方案只覆盖 Google 的 19302-19309，
+    # 漏掉 3478 端口的国内 STUN（如 stun.chat.bilibili.com、stun.miwifi.com），它们会按直连规则泄漏真实 IP。
+    # 仅当所用 Stash 版本不识别 PROTOCOL,STUN（配置加载报错）时，才改回 [rules] 中引用本条。
     webrtc-stun: network == 'udp' and (dst_port == 19302 or dst_port == 19303 or dst_port == 19304 or dst_port == 19305 or dst_port == 19306 or dst_port == 19307 or dst_port == 19308 or dst_port == 19309)
-
-    # 【严格模式，默认关闭】连标准 STUN/TURN 端口一起拦。
-    #   3478/3479 = STUN/TURN 明文，5349/5350 = STUN/TURN over TLS/DTLS。
-    #   ⚠️ 代价明确：PS / Switch / Xbox 正是用 3478-3480 做 NAT 类型检测，
-    #      开启后主机联机会退化为 NAT 3（严格），部分游戏无法组队。
-    #      同时会影响所有依赖标准 STUN 的桌面通话软件。
-    #   仅在「完全不联机、隐私优先级最高」时放开，并同步启用下方 [rules] 里对应行。
-    # webrtc-stun-strict: network == 'udp' and (dst_port == 3478 or dst_port == 3479 or dst_port == 5349 or dst_port == 5350)
 
 
 # =====================================
@@ -531,7 +519,7 @@ proxy-groups:
   # - name: XX策略
   #   # 策略图标
   #   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png
-  #   # 策略类型：select、url-test、fallback、load-balance
+  #   # 策略类型：select、url-test、fallback、load-balance。其中，select 类型默认取 proxies 或 proxy-providers 的第一项
   #   type: url-test
   #   # 指定 proxies 或 proxy-providers，两种编写格式，任选一
   #   # use: [sub-free1]
@@ -546,96 +534,96 @@ proxy-groups:
   #   # 通过正则表达式过滤节点
   #   filter: ''
 
-  # > 基础策略
-  - name: 手动选择
+  # 主代理（Stash 无内置 PROXY，此组对应 Shadowrocket/QuantumultX 首页所选节点，其它策略组默认跟随此处）
+  - name: PROXY
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
     type: select
-    proxies: [DIRECT, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [个人VPS_01, 个人VPS_02, 静态住宅或ISP, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # > 服务策略
   # AI服务
   - name: AI服务
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
     type: select
-    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02]
+    proxies: [PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02]
 
   # 应用
   - name: 谷歌服务
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: 苹果服务
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png
     type: select
-    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: 微软服务
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png
     type: select
-    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 社交
   - name: Telegram
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: Twitter
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: Facebook
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Facebook.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: TikTok
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png
     type: select
-    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 影音流媒体
   - name: 哔哩哔哩
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
     type: select
-    proxies: [DIRECT, 手动选择, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, 其它节点]
+    proxies: [DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, 其它节点]
 
   - name: YouTube
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   - name: 其它流媒体
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
     type: select
-    proxies: [手动选择, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 电商
   - name: PayPal
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Paypal.png
     type: select
-    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # CryptoCurrency
   - name: 数字加密
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cryptocurrency.png
     type: select
-    proxies: [手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 其它节点]
+    proxies: [PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 其它节点]
 
   # > 其它策略
   # 根据应用情况，需要可调控的线路（如：DouYin、ZFB、TX的一些操作，可能需指定特定线路）
   - name: 调控线路
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
     type: select
-    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [DIRECT, PROXY, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # 兜底策略
   - name: 兜底线路
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
     type: select
-    proxies: [DIRECT, 手动选择, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
+    proxies: [PROXY, DIRECT, 静态住宅或ISP, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 新加坡节点, 日本节点, 韩国节点, 美国节点, 加拿大节点, 其它节点]
 
   # > 自定义指定代理
   - name: 静态住宅或ISP
@@ -774,13 +762,15 @@ rule-providers:
 #    classical     yaml      任意规则类型        一般	     一般
 #    classical     text      任意规则类型        一般	     一般
 
+# 注意：Loyalsoldier/clash-rules 的文件虽以 .txt 结尾，内容却是 YAML（首行 payload:），须声明 format: yaml；
+#      MetaCubeX 的 .list 为每行一条的纯文本，声明 format: text。
 
   # 本地/局域网
   # 局域网 IP 及保留 IP 地址列表
   direct-lan:
     type: http
     behavior: ipcidr
-    format: text
+    format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt
     path: ./rules/direct-lan.txt
     interval: 86400
@@ -789,7 +779,7 @@ rule-providers:
   direct-local:
     type: http
     behavior: domain
-    format: text
+    format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt
     path: ./rules/direct-local.txt
     interval: 86400
@@ -801,7 +791,7 @@ rule-providers:
     # format: yaml
     # url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AdvertisingLite/AdvertisingLite_Domain.yaml
     # path: ./rules/adblock.yaml
-    format: text
+    format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
     path: ./rules/adblock-reject.txt
     interval: 86400
@@ -1023,7 +1013,7 @@ rule-providers:
   final-direct-ip:
     type: http
     behavior: ipcidr
-    format: text
+    format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt
     path: ./rules/final-direct-ip.txt
     interval: 86400
@@ -1032,7 +1022,7 @@ rule-providers:
   final-direct-domain:
     type: http
     behavior: domain
-    format: text
+    format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt
     path: ./rules/final-direct-domain.txt
     interval: 86400
@@ -1041,7 +1031,7 @@ rule-providers:
   final-proxy:
     type: http
     behavior: domain
-    format: text
+    format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
     path: ./rules/final-proxy.txt
     interval: 86400
@@ -1055,19 +1045,24 @@ rules:
   # QUIC 回落
   - SCRIPT,quic,REJECT,no-track
 
-  # WebRTC 防泄漏 —— 必须放在所有 RULE-SET 之前，否则会被兜底规则抢先匹配
-  # 拦截硬编码 IP 的 STUN 请求（fake-ip-filter 覆盖不到的绕过路径）。
-  # 与 dns.fake-ip-filter 的 STUN【A/B 组】配合使用：
-  #   · fake-ip-filter 挡住「查 DNS 走域名」的 STUN
-  #   · 本规则挡住「直连 IP 字面量」的 STUN
-  # 两者都到位，WebRTC 才无法探测真实公网 IP。
-  # 自测：https://browserleaks.com/webrtc 与 https://httpbin.org/ip 应一致。
-  - SCRIPT,webrtc-stun,REJECT,no-track
+  # WebRTC 防泄漏（默认模式）—— 必须放在所有 RULE-SET 之前，否则 STUN 会先命中直连规则
+  # 按协议识别 STUN 并拦截，不论目标是域名还是 IP、端口是 19302 还是 3478，也不论本应直连还是走代理。
+  # 代价：Google Meet、网页版 Discord 及 FaceTime、WhatsApp、Telegram 通话的 P2P 会失败，只能退回中继。
+  # 若 Stash 版本不识别 PROTOCOL,STUN（配置加载报错），改用下方按端口拦截的备用规则。
+  # 自测：Trickle ICE 中 stun.l.google.com:19302、stun.chat.bilibili.com:3478 均不应出现 srflx。
+  - PROTOCOL,STUN,REJECT,no-track
 
-  # 严格模式：同时拦截标准 STUN/TURN 端口 3478/3479/5349/5350。
-  #    会导致 PS / Switch / Xbox NAT 类型变严格，联机受影响。
-  #    放开前请先取消上方 script.shortcuts 中 webrtc-stun-strict 的注释。
-  # - SCRIPT,webrtc-stun-strict,REJECT,no-track
+  # 安全防护检测，避免检测站被规则集分到直连，导致测试结果失真
+  - DOMAIN-SUFFIX,browserleaks.com,兜底线路
+  - DOMAIN-SUFFIX,browserleaks.net,兜底线路
+  - DOMAIN-SUFFIX,browserleaks.org,兜底线路
+  - DOMAIN-SUFFIX,ipleak.net,兜底线路
+  - DOMAIN-SUFFIX,dnsleaktest.com,兜底线路
+  - DOMAIN-SUFFIX,whoer.net,兜底线路
+  - DOMAIN-SUFFIX,test-ipv6.com,兜底线路
+  - DOMAIN-SUFFIX,ip.sb,兜底线路
+  - DOMAIN-SUFFIX,whatismyip.com,兜底线路
+  - DOMAIN-SUFFIX,myip.la,兜底线路
 
   # 自定义规则 —— 本地/局域网、广告拦截
   - RULE-SET, direct-lan, DIRECT, no-resolve # ipcidr 类规则集支持 no-resolve 参数
@@ -1120,7 +1115,11 @@ rules:
   # - RULE-SET, final-proxy, 兜底线路
 
   # 根据 GEOIP 数据库判断IP是否属于CN地区，若匹配到，将走直连
-  - GEOIP, CN, DIRECT
+  # 原规则不带 no-resolve：未命中前面规则的域名（如 browserleaks.com、httpbin.org）会先经 doh.pub / 阿里 DoH 在本地解析，泄露所访问的境外域名
+  # - GEOIP, CN, DIRECT
+  # 加 no-resolve：避免触发 DNS 解析，仅对纯 IP 请求生效，未命中规则的域名不再在本地解析，请求直接落到 MATCH
+  # 副作用：未被规则集收录的国内小站会走「兜底线路」，如有必要，可单独为其写 DOMAIN-SUFFIX 直连规则
+  - GEOIP,CN,DIRECT,no-resolve
 
   # 当以上所有 本地/远程 规则都未匹配到时，将使用 MATCH 规则的策略
   #- MATCH, Proxy

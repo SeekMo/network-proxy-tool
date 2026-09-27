@@ -424,7 +424,7 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Global
 # Telegram 的中转服务器 IP 已在远程 Telegram.list 中，走「Telegram」策略组，无需另加规则。
 # ------------------------------------------------------------------
 
-# > 安全防护检测
+# > 安全防护检测，避免检测站被规则集分到直连，导致测试结果失真
 DOMAIN-SUFFIX,browserleaks.com,兜底线路
 DOMAIN-SUFFIX,browserleaks.net,兜底线路
 DOMAIN-SUFFIX,browserleaks.org,兜底线路
@@ -445,7 +445,7 @@ DOMAIN-SUFFIX,myip.la,兜底线路
 
 # > 防 DNS 泄漏
 # 根据 GEOIP 数据库判断 IP 是否属于 CN 地区，若匹配到，将走直连。
-# 加 no-resolve：仅对纯 IP 请求生效，未命中域名规则的域名不再在本地解析，直接落到 FINAL。
+# 加 no-resolve：避免触发 DNS 解析，仅对纯 IP 请求生效，未命中规则的域名不再在本地解析，请求直接落到 FINAL。
 # 副作用：未被规则集收录的国内小站会走「兜底线路」，如有必要，可以单独为其写 DOMAIN-SUFFIX 的自定义规则。
 GEOIP,CN,DIRECT,no-resolve
 

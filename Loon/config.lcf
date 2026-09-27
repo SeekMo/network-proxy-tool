@@ -437,7 +437,7 @@ DOMAIN-SUFFIX,whatismyip.com,兜底线路
 DOMAIN-SUFFIX,myip.la,兜底线路
 
 # > 自定义分流规则
-# Loon 本地规则整体优先于远程规则集，这 3 条会截走 AI.list（Gemini、Apple 智能）、Advertising.list（applovin、googleads）、Global.list（appledaily）的正确分流；相应域名已由 Google、
+# Loon 本地规则整体优先于远程规则集，这 3 条会截走 AI.list（Gemini、Apple 智能）、YouTube.list（googlevideo.com 等）、Advertising.list（googleads）、Global.list（appledaily）的正确分流；相应域名已由 Google、
 # YouTube、Apple、Apple_Domain 等规则集覆盖，且 Loon 规则查询在毫秒内，去掉对效率影响很小。
 # DOMAIN-KEYWORD,apple,苹果服务
 # DOMAIN-KEYWORD,google,谷歌服务
@@ -546,8 +546,10 @@ https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/JD_Price/JD_Price
 # 证书、主机名等配置
 # =====================================
 [MITM]
-skip-server-cert-verify = false
-# 前缀 - 表示排除特定主机名，即：不可 MitM 也不应该被打断连接的域名
-hostname = *.example.com, -*.icloud.com, -gateway.icloud.com, -gateway.icloud.com.cn, -weather-data.apple.com, -buy.itunes.apple.com, -pan.baidu.com
 ca-p12 = 
 ca-passphrase = 
+skip-server-cert-verify = false
+
+# 开启中间人攻击（MitM）功能的域名列表，仅解密 hostname 指定的域名的请求，可以使用通配符，也可以使用前缀 - 排除特定主机名，即：不可 MitM 也不应该被打断连接的域名
+hostname = *.example.com, -*.icloud.com
+

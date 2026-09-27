@@ -308,7 +308,7 @@ stun:106.12.71.140:3478
 
 Loon 的规则来源优先级为**本地 > 插件 > 订阅**，与规则类型无关。因此检测站、通话模式的本地规则一定生效；反过来，本地的宽泛规则也会截走远程规则集的正确分流。
 
-例：原配置的本地 `DOMAIN-KEYWORD,apple / google / youtube` 会把 AI.list 的 Gemini、Apple 智能域名分到谷歌服务、苹果服务（DIRECT），把 Advertising.list 的 `applovin`、`googleads` 从广告拦截中放过，把 Global.list 的 `appledaily` 分到直连。这 3 条现已注释，由远程规则集负责。
+例：原配置的本地 `DOMAIN-KEYWORD,apple / google / youtube` 会把 AI.list 的 Gemini、Apple 智能域名分到谷歌服务、苹果服务（DIRECT），把 YouTube.list 的 `googlevideo.com`、`youtubei.googleapis.com` 等分到谷歌服务，把 Advertising.list 的 `googleads` 从广告拦截中放过，把 Global.list 的 `appledaily` 分到直连。这 3 条现已注释，由远程规则集负责。
 
 ### 解析服务器的 IPv6 地址不是泄露
 

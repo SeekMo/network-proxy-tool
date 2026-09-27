@@ -59,7 +59,7 @@ http:
   ca: ''
   # 证书密码
   ca-passphrase: ''
-  # 开启中间人攻击（MitM）功能的域名列表，需要确保上述 CA 证书已受系统信任
+  # 开启中间人攻击（MitM）功能的域名列表，仅解密 hostname 指定的域名的请求，可以使用通配符，也可以使用前缀 - 排除特定主机名，即：不可 MitM 也不应该被打断连接的域名
   mitm:
     # - g.cn
     # - '*.google.cn'
@@ -67,6 +67,8 @@ http:
     # - weather-data.apple.com:* # 使用通配符对所有端口开启
     # - '*.weather-data.apple.com' # 域名中也可以使用通配符
     # - '-exclude.weather-data.apple.com' # 用-前缀排除域名
+    - '*.example.com'
+    - '-*.icloud.com'
     - '-gateway.icloud.com'
     - '-gateway.icloud.com.cn'
     - '-weather-data.apple.com'

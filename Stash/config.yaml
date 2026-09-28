@@ -35,7 +35,7 @@
 # https://raw.githubusercontent.com/jnlaoshu/MySelf/master/Stash/Script/JDPrice.stoverride
 
 
-# ===================================局==
+# =====================================
 # 规则模式：rule（规则） / global（全局代理）/ direct（全直连）
 # =====================================
 mode: rule
@@ -48,7 +48,7 @@ log-level: silent
 
 
 # =====================================
-# 
+# HTTP 引擎（MitM / 重写 / 脚本）
 # =====================================
 http:
   # 强制使用 HTTP 引擎处理 TCP 连接
@@ -68,8 +68,7 @@ http:
 
   # HTTP(S) 重写，支持 header、302、307、reject 多种策略
   url-rewrite:
-    - ^http://g\.cn http://www.google.com header # 重写请求头的域名
-    - ^https?://ad\.example - reject # 拒绝请求
+    # google.cn 重定向到 google.com
     - ^https?://www\.google\.cn https://www.google.com 302 # 直接返回一个 302 重定向的响应
  
   # 使用 JavaScript 脚本改写 HTTP(S) 请求
@@ -99,7 +98,7 @@ cron:
 
 
 # =====================================
-# 脚本
+# 脚本来源（供 http.script、cron 引用）
 # =====================================
 script-providers:
   # weather-us-aqi:
@@ -108,7 +107,7 @@ script-providers:
 
 
 # =====================================
-# 脚本
+# 脚本规则（script.shortcuts，供 rules 中 SCRIPT 引用）
 # =====================================
 script:
   # 使用表达式编写自定义规则
@@ -330,12 +329,12 @@ dns:
 
     # > GitHub
     # 存疑分组，建议评估后再决定去留，详见下方说明：
-    #    1) 冗余已清理：+.github.com 按本文件第 125 行的语义，已等同于
+    #    1) 冗余已清理：+.github.com 按 hosts 段说明的语义，已等同于
     #       github.com 与 *.github.com，原先的三条重复项已删除。
     #    2) 更重要的问题：GitHub 是需要走代理的域名，而放进 fake-ip-filter
     #       意味着客户端直接拿到真实 IP 去连接，Stash 此时只看得到目标 IP，
     #       DOMAIN 类规则可能失配，最终落到 GEOIP/兜底规则上，分流反而变差。
-    #       （若已开启域名嗅探 sniffer，可从 TLS SNI 恢复域名，影响会小一些。）
+    #       （Stash 会嗅探 TLS SNI 恢复域名，影响会小一些。）
     #    3) 原始用意是修 "git over SSH" 问题，但 SSH 经代理栈转发时 fake-ip
     #       本就工作正常。若你没有实际遇到 git 拉取失败，建议整组注释掉。
     # - '+.github.com'
@@ -560,7 +559,7 @@ proxy-groups:
   - name: 哔哩哔哩
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Bili.png
     type: select
-    proxies: [DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点 , 台湾节点, 其它节点]
+    proxies: [DIRECT, PROXY, 个人VPS_01, 个人VPS_02, 香港节点, 台湾节点, 其它节点]
 
   - name: YouTube
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png
@@ -654,7 +653,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇭🇰|🇲🇴|HK|(?i)Hong|港|澳门|澳門))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -662,7 +661,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇹🇼|TW|(?i)Taiwan|台湾|台灣))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -670,7 +669,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇸🇬|SG|(?i)Sing|新加坡|狮城))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -678,7 +677,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇯🇵|JP|(?i)Japan|Tokyo|日本|东京|大阪))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -686,7 +685,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/KR.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇰🇷|KR|KOR|(?i)Korea|韩国|韩|韓))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -694,7 +693,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇺🇸|US|(?i)America|美国|美))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -702,7 +701,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/CA.png
     type: url-test
     include-all: true
-    interval: 3600
+    interval: 1800
     lazy: true
     filter: '(?=.*(🇨🇦|CA|(?i)Canada|加拿大))^((?!(⚪|🔴|静态|住宅|(?i)ISP|Pri_V|P_VPS)).)*$'
 
@@ -735,7 +734,7 @@ rule-providers:
 #    classical     text      任意规则类型        一般	     一般
 
 # 注意：Loyalsoldier/clash-rules 的文件虽以 .txt 结尾，内容却是 YAML（首行 payload:），须声明 format: yaml；
-#      MetaCubeX 的 .list 为每行一条的纯文本，声明 format: text。
+#      MetaCubeX 的 .list 为每行一条的纯文本，声明 format: text；.mrs 为 mihomo 二进制规则集，声明 format: mrs（仅支持 domain / ipcidr）。
 
   # 本地/局域网
   # 局域网 IP 及保留 IP 地址列表
@@ -760,9 +759,6 @@ rule-providers:
   adblock:
     type: http
     behavior: domain
-    # format: yaml
-    # url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AdvertisingLite/AdvertisingLite_Domain.yaml
-    # path: ./rules/adblock.yaml
     format: yaml
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
     path: ./rules/adblock-reject.txt
@@ -856,13 +852,14 @@ rule-providers:
     interval: 86400
 
   # Bilibili国际版
-  biliintl:
-    type: http
-    behavior: domain
-    format: text
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/biliintl.list
-    path: ./rules/biliintl.list
-    interval: 86400
+  # 未被 rules 引用，屏蔽以免启动时加载占用内存
+  # biliintl:
+  #   type: http
+  #   behavior: domain
+  #   format: text
+  #   url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/biliintl.list
+  #   path: ./rules/biliintl.list
+  #   interval: 86400
 
   # CryptoCurrency
   cryptocurrency:
@@ -936,40 +933,41 @@ rule-providers:
     interval: 86400
 
   # 抖音
-  douyin:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/DouYin/DouYin.yaml
-    path: ./rules/douyin.yaml
-    interval: 86400
+  # 以下 4 个规则集对应的 rules 已屏蔽，定义一并屏蔽，需要时与 rules 同时放开
+  # douyin:
+  #   type: http
+  #   behavior: classical
+  #   format: yaml
+  #   url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/DouYin/DouYin.yaml
+  #   path: ./rules/douyin.yaml
+  #   interval: 86400
 
   # 腾讯
-  tencent:
-    type: http
-    behavior: domain
-    format: text
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tencent.list
-    path: ./rules/tencent.list
-    interval: 86400
+  # tencent:
+  #   type: http
+  #   behavior: domain
+  #   format: text
+  #   url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tencent.list
+  #   path: ./rules/tencent.list
+  #   interval: 86400
 
   # 百度
-  baidu:
-    type: http
-    behavior: domain
-    format: text
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/baidu.list
-    path: ./rules/baidu.list
-    interval: 86400
+  # baidu:
+  #   type: http
+  #   behavior: domain
+  #   format: text
+  #   url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/baidu.list
+  #   path: ./rules/baidu.list
+  #   interval: 86400
 
   # 小红书
-  xiaohongshu:
-    type: http
-    behavior: domain
-    format: text
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/xiaohongshu.list
-    path: ./rules/xiaohongshu.list
-    interval: 86400
+  # xiaohongshu:
+  #   type: http
+  #   behavior: domain
+  #   format: text
+  #   url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/xiaohongshu.list
+  #   path: ./rules/xiaohongshu.list
+  #   interval: 86400
 
   # Bilibili
   bilibili:
@@ -1000,13 +998,14 @@ rule-providers:
     interval: 86400
 
   # 代理域名列表
-  final-proxy:
-    type: http
-    behavior: domain
-    format: yaml
-    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
-    path: ./rules/final-proxy.txt
-    interval: 86400
+  # 对应的 rules 已屏蔽（由 MATCH 兜底），定义一并屏蔽，省去约 2.7 万条的加载与内存占用
+  # final-proxy:
+  #   type: http
+  #   behavior: domain
+  #   format: yaml
+  #   url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
+  #   path: ./rules/final-proxy.txt
+  #   interval: 86400
 
 
 # =====================================
@@ -1082,15 +1081,16 @@ rules:
   - RULE-SET, facebook, Facebook
   - RULE-SET, tiktok, TikTok
 
-  - RULE-SET, google, 谷歌服务
-
+  # MetaCubeX 的公司级规则集包含旗下子品牌域名（google 覆盖 youtube 全部 178 条，microsoft 覆盖 github 全部 64 条），
+  # Stash 从上到下匹配，子品牌规则集必须排在公司规则集之前，否则 YouTube → 谷歌服务、GitHub → 微软服务（默认直连）
   - RULE-SET, youtube, YouTube
+  - RULE-SET, google, 谷歌服务
 
   - RULE-SET, cryptocurrency, 数字加密
 
   - RULE-SET, apple, 苹果服务
-  - RULE-SET, microsoft, 微软服务
   - RULE-SET, github, 兜底线路
+  - RULE-SET, microsoft, 微软服务
 
   - RULE-SET, paypal, PayPal
 
@@ -1119,5 +1119,5 @@ rules:
   - GEOIP,CN,DIRECT,no-resolve
 
   # 当以上所有 本地/远程 规则都未匹配到时，将使用 MATCH 规则的策略
-  #- MATCH, Proxy
+  #- MATCH, PROXY
   - MATCH, 兜底线路
